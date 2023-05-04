@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "18B03163-B35C-45F5-8D1A-E357648C34F9"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C36E681A-A394-4220-8758-F8BDA2FF6E0D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalNotes/MainNavigationListView/ItemListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
+            landmarkName = "refreshList(using:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD840401-F30A-4F46-B9BC-5A95F2D14BBB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalNotes/MainNavigationListView/UserListNamesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "pullAvailableLists()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1F6DE3FC-B220-4782-97A8-87D299D54FCA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalNotes/MainNavigationListView/UserListNamesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8329765E-EB49-42CD-8337-F67A396CC838"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalNotes/MainNavigationListView/ItemListView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "loopThroughSectionEntries(section:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C693BAE-1416-433B-ABE5-8958C1631B4F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Login/LoginViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "validateUser(hostname:username:password:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E10C7DEB-9F27-4282-A0DC-0615D17AAA46"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/UserListNamesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6BA37EF5-1E9C-4FE5-97DA-A3350A90D46B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/ItemListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "615"
+            endingLineNumber = "615"
+            landmarkName = "createNewList(listName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C1EEF90A-1E87-4D1E-8994-EB3D8979FE84"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/ItemListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "613"
+            endingLineNumber = "613"
+            landmarkName = "createNewList(listName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B2EAF7C9-F849-4C24-965D-2EC9D36D28FD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/ItemListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "486"
+            endingLineNumber = "486"
+            landmarkName = "updateListToUse(sectionsWithEntry:listName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3FB4D515-B061-4C6D-A740-DCAC9AF1213F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "fetchToken(hostname:username:password:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "240885F2-C013-4515-8CEB-D865E734A1CB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "fetchToken(hostname:username:password:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "240885F2-C013-4515-8CEB-D865E734A1CB - 764b30e9e24f8945"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.fetchToken(hostname: Swift.String, username: Swift.String, password: Swift.String) async -&gt; Swift.Result&lt;NewbCook.AuthenticationToken, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "1780">
+               </Location>
+               <Location
+                  uuid = "240885F2-C013-4515-8CEB-D865E734A1CB - 2fe5116c7718eb44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.fetchToken(hostname: Swift.String, username: Swift.String, password: Swift.String) async -&gt; Swift.Result&lt;NewbCook.AuthenticationToken, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "808">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C835DED-8D00-446C-A94A-E7311894F386"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "fetchToken(hostname:username:password:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6C835DED-8D00-446C-A94A-E7311894F386 - 764b30e9e24f8928"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.fetchToken(hostname: Swift.String, username: Swift.String, password: Swift.String) async -&gt; Swift.Result&lt;NewbCook.AuthenticationToken, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "259"
+                  endingLineNumber = "259"
+                  offsetFromSymbolStart = "1964">
+               </Location>
+               <Location
+                  uuid = "6C835DED-8D00-446C-A94A-E7311894F386 - 2fe5116c7718eb29"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.fetchToken(hostname: Swift.String, username: Swift.String, password: Swift.String) async -&gt; Swift.Result&lt;NewbCook.AuthenticationToken, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "259"
+                  endingLineNumber = "259"
+                  offsetFromSymbolStart = "992">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BFDDCBE0-2F9F-4301-999D-B055FCA8974D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
+            landmarkName = "fetchToken(hostname:username:password:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BFDDCBE0-2F9F-4301-999D-B055FCA8974D - 764b30e9e24f88ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.fetchToken(hostname: Swift.String, username: Swift.String, password: Swift.String) async -&gt; Swift.Result&lt;NewbCook.AuthenticationToken, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "1344">
+               </Location>
+               <Location
+                  uuid = "BFDDCBE0-2F9F-4301-999D-B055FCA8974D - 2fe5116c7718eaef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.fetchToken(hostname: Swift.String, username: Swift.String, password: Swift.String) async -&gt; Swift.Result&lt;NewbCook.AuthenticationToken, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "448">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E3725DFE-984C-4003-90DB-062182C3E77C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
+            landmarkName = "processDataForAuthenticationToken(data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51028D4C-1447-487A-A7E8-1732CADD472F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "attemptTokenRefresh(newTokenURL:saveTokenURL:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E94580AA-8B8F-416F-A260-0F716125F88C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "executeNetworkCall(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F6FDAA2-BC8F-4AAA-8204-F7CF5CCB18C9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "process(response:data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1E257DDC-14D3-41F5-8F72-AB6F53A2D26C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "process(response:data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B282287E-BB86-4575-B6FF-A39C90BA609C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
+            landmarkName = "fetchListNamesWithIDs()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EC06EF61-48E2-4D1D-AD96-15320BF931E5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
+            landmarkName = "fetchListNamesWithIDs()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EC06EF61-48E2-4D1D-AD96-15320BF931E5 - b7153271a7e2b888"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.fetchListNamesWithIDs() async -&gt; Swift.Result&lt;Swift.Array&lt;NewbCook.ResponseListNamesWithIDs&gt;, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477"
+                  offsetFromSymbolStart = "4260">
+               </Location>
+               <Location
+                  uuid = "EC06EF61-48E2-4D1D-AD96-15320BF931E5 - eb188b4e82efca89"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.fetchListNamesWithIDs() async -&gt; Swift.Result&lt;Swift.Array&lt;NewbCook.ResponseListNamesWithIDs&gt;, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477"
+                  offsetFromSymbolStart = "868">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A5D16D0-E515-4D8B-A931-E33C241F97ED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
+            landmarkName = "fetchListNamesWithIDs()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4A5D16D0-E515-4D8B-A931-E33C241F97ED - b7153271a7e2b92d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.fetchListNamesWithIDs() async -&gt; Swift.Result&lt;Swift.Array&lt;NewbCook.ResponseListNamesWithIDs&gt;, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474"
+                  offsetFromSymbolStart = "3988">
+               </Location>
+               <Location
+                  uuid = "4A5D16D0-E515-4D8B-A931-E33C241F97ED - eb188b4e82efcb2c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.fetchListNamesWithIDs() async -&gt; Swift.Result&lt;Swift.Array&lt;NewbCook.ResponseListNamesWithIDs&gt;, NewbCook.AppError&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474"
+                  offsetFromSymbolStart = "596">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2A0080EA-9D5F-4EA6-A4FF-E8CAD1A1FA87"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "attemptTokenRefresh(newTokenURL:saveTokenURL:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "644C9192-B60A-4D46-9F42-924B51DCD77B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "process(response:data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B415677-6DBC-4B24-AB2D-4DE66830D330"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/ItemListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "description"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CE46B4AA-5961-41E9-B2DD-5439A979F2F4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "544"
+            endingLineNumber = "544"
+            landmarkName = "deleteFromList(entry:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CE46B4AA-5961-41E9-B2DD-5439A979F2F4 - 1c7620ee9051a6bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for NewbCook.BackendAPI.deleteFromList(entry: NewbCook.ListEntry) async -&gt; Swift.Optional&lt;Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "544"
+                  endingLineNumber = "544"
+                  offsetFromSymbolStart = "2224">
+               </Location>
+               <Location
+                  uuid = "CE46B4AA-5961-41E9-B2DD-5439A979F2F4 - a819200176d734a5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for NewbCook.BackendAPI.deleteFromList(entry: NewbCook.ListEntry) async -&gt; Swift.Optional&lt;Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "544"
+                  endingLineNumber = "544"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "CE46B4AA-5961-41E9-B2DD-5439A979F2F4 - 2a2c735ce0f380ba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.deleteFromList(entry: NewbCook.ListEntry) async -&gt; Swift.Optional&lt;Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "544"
+                  endingLineNumber = "544"
+                  offsetFromSymbolStart = "144">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8CA2F3D2-1123-4D8C-8F80-B28D718C64DC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
+            landmarkName = "addToList(sectionID:listName:entryName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8CA2F3D2-1123-4D8C-8F80-B28D718C64DC - 836fab5e7684cd59"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for NewbCook.BackendAPI.addToList(sectionID: Swift.Optional&lt;Swift.UInt&gt;, listName: Swift.String, entryName: Swift.String) async -&gt; Swift.Result&lt;NewbCook.ListSectionWithEntry, Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "358"
+                  endingLineNumber = "358"
+                  offsetFromSymbolStart = "2612">
+               </Location>
+               <Location
+                  uuid = "8CA2F3D2-1123-4D8C-8F80-B28D718C64DC - b91efb635b84bb78"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for NewbCook.BackendAPI.addToList(sectionID: Swift.Optional&lt;Swift.UInt&gt;, listName: Swift.String, entryName: Swift.String) async -&gt; Swift.Result&lt;NewbCook.ListSectionWithEntry, Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "358"
+                  endingLineNumber = "358"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "8CA2F3D2-1123-4D8C-8F80-B28D718C64DC - be0bc17a2ca2715b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.addToList(sectionID: Swift.Optional&lt;Swift.UInt&gt;, listName: Swift.String, entryName: Swift.String) async -&gt; Swift.Result&lt;NewbCook.ListSectionWithEntry, Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "358"
+                  endingLineNumber = "358"
+                  offsetFromSymbolStart = "300">
+               </Location>
+               <Location
+                  uuid = "8CA2F3D2-1123-4D8C-8F80-B28D718C64DC - 43583267f14ed35a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.addToList(sectionID: Swift.Optional&lt;Swift.UInt&gt;, listName: Swift.String, entryName: Swift.String) async -&gt; Swift.Result&lt;NewbCook.ListSectionWithEntry, Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "358"
+                  endingLineNumber = "358"
+                  offsetFromSymbolStart = "164">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "39DD338C-75C4-40FE-97B8-0EE1A5F2E289"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
+            landmarkName = "createNewList(listName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "505E3398-B8E6-408E-8D80-13607AEC707E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
+            landmarkName = "createNewList(listName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "505E3398-B8E6-408E-8D80-13607AEC707E - f14aba10df990e6d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for NewbCook.BackendAPI.createNewList(listName: Swift.String) async -&gt; Swift.Optional&lt;Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "3128">
+               </Location>
+               <Location
+                  uuid = "505E3398-B8E6-408E-8D80-13607AEC707E - 36b287173bc7b2ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for NewbCook.BackendAPI.createNewList(listName: Swift.String) async -&gt; Swift.Optional&lt;Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "2780">
+               </Location>
+               <Location
+                  uuid = "505E3398-B8E6-408E-8D80-13607AEC707E - 2976859a09d8912e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for NewbCook.BackendAPI.createNewList(listName: Swift.String) async -&gt; Swift.Optional&lt;Swift.Error&gt;"
+                  moduleName = "NewbCook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/iury/Downloads/iOS-PantryApp/NewbCook/Backend/BackendAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D97D704-460D-4EEE-8CB0-1F242043DD64"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/UserListNamesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "pullAvailableLists()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A6D76F7B-B717-4268-9D9B-BEC4BB8254E0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "executeNetworkCall(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7749D5FB-BA17-4F57-AA76-862B2EE617E5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "attemptTokenRefresh(newTokenURL:saveTokenURL:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "219897BA-6368-4239-B588-9BD3B8BFBC98"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "executeNetworkCall(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB5B5DD3-3324-4AC2-964F-46333CD11E73"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/Backend/BackendAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "fetchToken(hostname:username:password:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE5EE5EC-F323-4C23-97DF-6347EAA447D1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewbCook/MainNavigationListView/ItemListView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "showingListNames()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
