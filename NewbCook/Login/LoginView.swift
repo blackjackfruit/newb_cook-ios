@@ -91,7 +91,8 @@ struct LoginView: View {
                 let result = await loginViewModel.validateUser(
                     hostname: ipAddress,
                     username: username,
-                    password: password)
+                    password: password
+                )
                 switch result {
                 case .success(_):
                     self.isNotAuthenticated = false
@@ -156,7 +157,7 @@ extension LoginView {
     }
     var backendAPI: BackendAPI {
         get {
-            return BackendAPI.shared
+            return ConcreteBackendAPI.shared
         }
     }
 }

@@ -23,18 +23,14 @@ struct AddModifySectionEntryView: View {
     @State var foundEntries: [String: String] = [:]
     @State var readyToShowResults = false
     
-    @Binding var activeListName: String
-    
     @FocusState var entryTextFieldFocused: Bool
     
     var itemListViewModel: ItemListViewModel
     
     init(
-        activeListName: Binding<String>,
         listSectionWithEntry: ListSectionWithEntry,
         itemListViewModel: ItemListViewModel
     ) {
-        self._activeListName = activeListName
         self.listSectionWithEntry = listSectionWithEntry
         self.itemListViewModel = itemListViewModel
         
@@ -117,7 +113,6 @@ struct AddModifySectionEntryView: View {
                 print(error) // TODO: record metric
                 return
             }
-            activeListName = await itemListViewModel.activeListName
         }
     }
     

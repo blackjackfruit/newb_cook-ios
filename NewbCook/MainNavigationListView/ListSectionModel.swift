@@ -7,6 +7,25 @@
 
 import Foundation
 
+protocol BackendEndpoint {
+    var endpoint: String { get }
+}
+
+protocol ListParameters: Identifiable {
+    var id: UInt { get }
+    var listName: String { get }
+}
+
+struct ConcreteListParameters: Codable, ListParameters {
+    var id: UInt
+    var listName: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case id = "list_id"
+        case listName = "list_name"
+    }
+}
+
 enum SectionType: String, Codable {
     case loadingMoreToList
     case itemsFound
@@ -29,15 +48,8 @@ enum DirectionToReadList: String, Codable {
     case initial
 }
 
-struct DeleteEntry: Codable {
-    var entryID: UInt
-    
-    private enum CodingKeys: String, CodingKey {
-        case entryID = "entry_id"
-    }
-}
-
 struct ListEntry: Identifiable, Codable, Hashable {
+    
     var id = UUID()
     var entryID: UInt
     var entryIsCheckMarked: Bool
@@ -91,5 +103,9 @@ struct ListSectionWithEntry: Identifiable, Codable, Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+    static func == (lhs: ListSectionWithEntry, rhs: ListSectionWithEntry) -> Bool {
+        return lhs.id == rhs.id
     }
 }

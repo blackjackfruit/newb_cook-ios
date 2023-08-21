@@ -22,7 +22,7 @@ struct SearchedView: View {
         VStack {
             HStack {
                 HStack {
-                    TextField("Search for or Create Item", text: $searchText)
+                    TextField("Tap Here to Search for or Add Item", text: $searchText)
                     .focused($focus, equals: .createNewItem)
                     .padding(.leading, 5)
                     .onChange(of: focus) { newValue in

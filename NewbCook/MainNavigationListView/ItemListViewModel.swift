@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
-enum AppError: Error {
+public enum AppError: Error {
     case hostNotAvailable // When the server is not running
     case invalidCredentials
     case sessionExpired
@@ -31,55 +32,11 @@ enum AppError: Error {
     }
 }
 
-struct ViewList: Codable {
-    var listName: String
-    var directionToReadList: DirectionToReadList
-    
-    enum CodingKeys: String, CodingKey {
-        case listName = "list_name"
-        case directionToReadList = "direction_to_read_list"
-    }
-}
-
-struct LoginCredentials: Codable {
-    let username: String
-    let password: String
-}
-
-struct CreateList: Codable {
-    let listName: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case listName = "list_name"
-    }
-}
-
-struct UpdateItem: Codable {
-    let listID: UInt
-    let listName: String
-    let entryID: UInt
-    let entryName: String
-    let entryIsCheckMarked: Bool
-
-    private enum CodingKeys: String, CodingKey {
-        case listID = "list_id"
-        case listName = "list_name"
-        case entryID = "entry_id"
-        case entryName = "entry_name"
-        case entryIsCheckMarked = "entry_is_check_marked"
-    }
-}
-
-struct AddItem: Codable {
-    let id: UInt?
-    let listName: String
-    let entryName: String
-
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case listName = "list_name"
-        case entryName = "entry_name"
-    }
+enum ItemListViewModelStatus {
+    case loadingList
+    case listeningToBackend
+    case listeningToBackendButNoListExists
+    case failure(AppError)
 }
 
 struct ResponseListNamesWithIDs: Codable {
@@ -91,17 +48,7 @@ struct ResponseListNamesWithIDs: Codable {
     }
 }
 
-struct SearchRequest: Codable {
-    let searchRequest: String
-    let listName: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case searchRequest = "search_request"
-        case listName = "list_name"
-    }
-}
-
-struct AuthenticationToken: Codable {
+public struct AuthenticationToken: Codable {
     let token: String
     let refreshToken: String
     
@@ -109,22 +56,6 @@ struct AuthenticationToken: Codable {
         case token
         case refreshToken = "refresh_token"
     }
-}
-
-struct RemoveListName: Codable {
-    let listName: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case listName = "list_name"
-    }
-}
-
-struct ListNames: Codable {
-    var authentication: AuthenticationToken
-}
-
-enum ItemListError: Error {
-    case todo
 }
 
 /**
@@ -352,17 +283,21 @@ class SectionManager: ObservableObject {
 
 @MainActor
 class ItemListViewModel: ObservableObject {
-    @Published var isLoadingIntialData: Bool = false
+    @Published var itemViewModelStatus: ItemListViewModelStatus = .loadingList
     @Published var isLoadingData: Bool = false
     
     @Published var listNonSearchSections: [ListSection] = [] // All uncompleted sections and the completed section
     @Published var listSearchSections: [ListSection] = [] // All search result found for currently text to search for
     
-    @Published var listNamesWithIDs: [ResponseListNamesWithIDs] = []
+    var listNamesWithIDs: [ResponseListNamesWithIDs] = []
     @Published var activeListName: String = ""
+    
     let secureStorage: SecureStorage
     let sectionManager = SectionManager()
     var searchText: String = ""
+    
+    var passthrough = PassthroughSubject<ItemListViewModelStatus, AppError>()
+    var cancellables: Set<AnyCancellable> = []
     
     static var loadingMoreToList = ListSection(specialSection: .loadingMoreToList, listID: 0, listName: "", sectionID: 5, sectionName: "LoadingMoreToList", sectionEntries: [])
     static var listEnd = ListSection(specialSection: .listEnd, listID: 0, listName: "", sectionID: 0, sectionName: "NeedToLoadMore", sectionEntries: [])
@@ -376,28 +311,128 @@ class ItemListViewModel: ObservableObject {
     var loadingViewFirstTime = false
     let backendAPI: BackendAPI
     
-    init(secureStorage: SecureStorage, backendAPI: BackendAPI = BackendAPI()) {
+    init(secureStorage: SecureStorage, backendAPI: BackendAPI = ConcreteBackendAPI()) {
         self.secureStorage = secureStorage
         self.backendAPI = backendAPI
+        
+        self.passthrough.sink { appError in
+            print(appError)
+        } receiveValue: { [weak self] status in
+            self?.itemViewModelStatus = status
+        }
+        .store(in: &cancellables)
     }
+    
+    func connectWithBackend(using listName: String? = nil) {
+        passthrough.send(.loadingList)
+        
+        func fetchListSections(listName: String) async {
+            let result = await updateListSections(listName: listName)
+            switch result {
+            case .success(_):
+                passthrough.send(.listeningToBackend)
+            case .failure(let error):
+                passthrough.send(.failure(error))
+            }
+        }
+        Task {
+            if let listName = listName {
+                await fetchListSections(listName: listName)
+            }
+            else {
+                let result = await self.pullInitialList()
+                switch result {
+                case .success(let listName):
+                    if let listName = listName {
+                        activeListName = listName
+                        await fetchListSections(listName: listName)
+                    } else {
+                        passthrough.send(.listeningToBackendButNoListExists)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    func searchForItem(name searchText: String) async {
+        self.searchText = searchText
+        if searchText.count == 0 {
+            self.listSearchSections = sectionManager.getSearchResultSections(found: [], activeListName: activeListName, searchText: searchText)
+            return
+        }
+        let searchRequest = ConcreteTransmitSearchRequest(
+            searchRequest: searchText,
+            listName: activeListName
+        )
+        let result: Result<[ListSectionWithEntry], AppError> = await self.backendAPI.execute(item: searchRequest)
+        switch result {
+        case .success(let sections):
+            self.listSearchSections = sectionManager.getSearchResultSections(found: sections, activeListName: activeListName, searchText: searchText)
+        case .failure(let error):
+            print("TODO: \(error)")
+        }
+    }
+    
+    func switchList(using listName: String) async -> AppError? {
+        let fetchList = ConcreteTransmitFetchList(listName: listName)
+        let result: Result<[ListSectionWithEntry], AppError> = await self.backendAPI.execute(item: fetchList)
+        switch result {
+        case .success(let sectionsWithEntry):
+            self.updateListToUse(sectionsWithEntry: sectionsWithEntry, listName: listName)
+            return nil
+        case .failure(let error):
+            self.passthrough.send(.failure(error))
+            return error
+        }
+    }
+    
+    func refreshList(using listName: String) async {
+        let fetchList = ConcreteTransmitFetchList(listName: listName)
+        let result: Result<[ListSectionWithEntry], AppError> = await self.backendAPI.execute(item: fetchList)
+        switch result {
+        case .success(let sectionsWithEntry):
+            self.updateListToUse(sectionsWithEntry: sectionsWithEntry, listName: listName)
+        case .failure(let error):
+            print("TODO: \(error)")
+        }
+    }
+    
+    func deleteListName(listName: String) async -> Result<[ResponseListNamesWithIDs], AppError> {
+        let deleteList = ConcreteTransmitDeleteList(listName: listName)
+        let result: Result<[ResponseListNamesWithIDs], AppError> = await backendAPI.execute(item: deleteList)
+        switch result {
+        case .success(_):
+            let availableLists = await pullAvailableLists()
+            if listName == activeListName {
+                switch availableLists {
+                case .success(let listIDs):
+                    if let first = listIDs.first {
+                        await switchList(using: first.listName)
+                    }
+                case .failure(let error) :
+                    print("TODO: \(error)")
+                }
+                self.updateListToUse(sectionsWithEntry: [], listName: nil)
+            }
+            return availableLists
+        case .failure(_):
+            // TODO: record metric
+            self.updateListToUse(sectionsWithEntry: [], listName: "Select List")
+        }
+        return .failure(.custom(message: "TODO"))
+    }
+}
+
+extension ItemListViewModel {
 
     /**
     Pulls the available lists from the backend which are registered to the token provided.
     - Returns: A Result object that contains either a list of list names or an ItemListError.
     */
     func pullAvailableLists() async -> Result<[ResponseListNamesWithIDs], AppError> {
-        let result = await BackendAPI.shared.fetchListNamesWithIDs()
-        switch result {
-        case .success(let listNamesWithIDs):
-            self.listNamesWithIDs = listNamesWithIDs
-            return .success(listNamesWithIDs)
-        case .failure(let error):
-            return .failure(error)
-        }
-    }
-    
-    func returnReminaingListAfterRemoving(listName: String) async -> Result<[ResponseListNamesWithIDs], AppError> {
-        let result = await BackendAPI.shared.fetchListNamesWithIDs()
+        let result: Result<[ResponseListNamesWithIDs], AppError> = await self.backendAPI.execute(item: ConcreteTransmitFetchListsWithIDs())
         switch result {
         case .success(let listNamesWithIDs):
             self.listNamesWithIDs = listNamesWithIDs
@@ -413,13 +448,13 @@ class ItemListViewModel: ObservableObject {
         - Returns: A Result object that contains either a list of ListSections or an ItemListError.
     */
     func pullInitialList() async -> Result<String?, AppError> {
-        isLoadingIntialData = true
         let result = await pullAvailableLists()
         switch result {
         case .success(let listNamesWithIDs):
             if let listNameWithID = listNamesWithIDs.first {
                 let startTime = Date()
-                let result = await BackendAPI.shared.fetchList(for: listNameWithID.listName, directionToReadList: .initial)
+                let fetchList = ConcreteTransmitFetchList(listName: listNameWithID.listName)
+                let result: Result<[ListSectionWithEntry], AppError> = await self.backendAPI.execute(item: fetchList)
                 let endTime = Date()
                 let timeDifference = endTime.timeIntervalSince(startTime)
                 print(timeDifference)
@@ -437,92 +472,50 @@ class ItemListViewModel: ObservableObject {
                     self.sectionManager.replaceBottomSection(entry: ItemListViewModel.listEnd)
                     self.listNonSearchSections = sectionManager.getAllSections()
                     self.activeListName = listNameWithID.listName
-                    self.isLoadingIntialData = false
                     return .success(listNameWithID.listName)
                 case .failure(let error):
-                    isLoadingIntialData = false
-                    return .failure(.custom(message: "TODO"))
+                    return .failure(.custom(message: "TODO: \(error)"))
                 }
             } else {
                 // TODO if there i no list then allow user to create a list
-                isLoadingIntialData = false
                 return .success(nil)
             }
         case .failure(let error):
-            isLoadingIntialData = false
             return .failure(error)
         }
     }
     
-    func deleteListName(listName: String) async -> Result<[ResponseListNamesWithIDs], AppError> {
-        let result = await backendAPI.removeListName(listName: listName)
-        switch result {
-        case .success(_):
-            return await pullAvailableLists()
-        case .failure(_):
-            // TODO: record metric
-            self.updateListToUse(sectionsWithEntry: [], listName: "Select List")
-        }
-        return .failure(.custom(message: "TODO"))
-    }
-    
-    func searchForItem(name searchText: String) async {
-        self.searchText = searchText
-        if searchText.count == 0 {
-            self.listSearchSections = sectionManager.getSearchResultSections(found: [], activeListName: activeListName, searchText: searchText)
-            return
-        }
-        
-        let result = await BackendAPI.shared.searchBackend(for: searchText, listName: activeListName)
-        self.listSearchSections = sectionManager.getSearchResultSections(found: result, activeListName: activeListName, searchText: searchText)
-    }
-    
-    private func updateListToUse(sectionsWithEntry: [ListSectionWithEntry], listName: String) {
-        self.sectionManager.switchToNewList(listName: listName)
-        self.sectionManager.updateEntries(sectionsWithEntry)
-        self.sectionManager.replaceBottomSection(entry: ItemListViewModel.listEnd)
-
-        self.listNonSearchSections = sectionManager.getAllSections()
-        self.activeListName = listName
-    }
-    
-    func switchList(using listName: String) async -> AppError? {
-        let result = await BackendAPI.shared.fetchList(for: listName, directionToReadList: .initial)
-        switch result {
-        case .success(let sectionsWithEntry):
-            self.updateListToUse(sectionsWithEntry: sectionsWithEntry, listName: listName)
-            return nil
-        case .failure(let error):
-            print("TODO: \(error)")
-            return error
+    private func updateListToUse(sectionsWithEntry: [ListSectionWithEntry], listName: String?) {
+        if let listName = listName {
+            self.sectionManager.switchToNewList(listName: listName)
+            self.sectionManager.updateEntries(sectionsWithEntry)
+            self.sectionManager.replaceBottomSection(entry: ItemListViewModel.listEnd)
+            
+            self.listNonSearchSections = sectionManager.getAllSections()
+            self.activeListName = listName
+            passthrough.send(.listeningToBackend)
+        } else {
+            self.activeListName = ""
+            passthrough.send(.listeningToBackendButNoListExists)
         }
     }
     
-    func refreshList(using listName: String) async {
-        let result = await BackendAPI.shared.fetchList(for: listName, directionToReadList: .initial)
-        switch result {
-        case .success(let sectionsWithEntry):
-            self.updateListToUse(sectionsWithEntry: sectionsWithEntry, listName: listName)
-        case .failure(let error):
-            print("TODO: \(error)")
-        }
-    }
-    
-    func updateListSections(listName: String, directionToReadList: DirectionToReadList) async -> Result<[ListSection], AppError> {
+    func updateListSections(listName: String) async -> Result<[ListSectionWithEntry], AppError> {
         if isLoadingData {
             return .success([])
         }
         isLoadingData = true
-        let result = await BackendAPI.shared.fetchList(for: listName, directionToReadList: directionToReadList)
+        let fetchList = ConcreteTransmitFetchList(listName: listName)
+        let result: Result<[ListSectionWithEntry], AppError> = await self.backendAPI.execute(item: fetchList)
         isLoadingData = false
         switch result {
         case .success(let sectionsWithEntry):
             self.sectionManager.updateEntries(sectionsWithEntry)
+            return .success(sectionsWithEntry)
             // TODO: Pagination
         case .failure(let error):
-            return .failure(.custom(message: "TODO"))
+            return .failure(error)
         }
-        return .failure(.custom(message: "TODO"))
     }
     
     private func deleteSectionItemArray(for sections: inout [ListSection], entryID: UInt) {
@@ -562,29 +555,19 @@ class ItemListViewModel: ObservableObject {
             entryName: entryName,
             entryIsCheckMarked: entryIsCheckMarked
         )
-        
-        let error = await BackendAPI.shared.deleteFromList(entry: entry)
-        if let error = error {
+        let deleteEntry = ConcreteTransmitDeleteItem(entryID: entry.entryID)
+        let result: Result<[String: String], AppError> = await self.backendAPI.execute(item: deleteEntry)
+        switch result {
+        case .success(_):
+            self.sectionManager.removeEntry(sectionWithEntry)
+            self.listNonSearchSections = self.sectionManager.getAllSections()
+        case .failure(let error):
             print("Error \(error)") // TODO: Save metrics
-            return
         }
-        self.sectionManager.removeEntry(sectionWithEntry)
-        self.listNonSearchSections = self.sectionManager.getAllSections()
     }
     
     func isAuthenticated() -> Bool {
         return self.retrieveTokenFromStorage() != nil
-    }
-    
-    func initialViewDidLoad() -> Bool {
-        if retrieveTokenFromStorage() != nil {
-            return true
-        }
-        if loadingViewFirstTime == false{
-            loadingViewFirstTime = true
-            return false
-        }
-        return true
     }
     
     func retrieveTokenFromStorage() -> String? {
@@ -592,7 +575,14 @@ class ItemListViewModel: ObservableObject {
     }
     
     func updateEntry(sectionWithEntry: ListSectionWithEntry) async -> Error? {
-        let result = await self.backendAPI.updateSectionEntry(listSectionWithEntry: sectionWithEntry)
+        let transmitUpdateItem = ConcreteTransmitUpdateItem(
+            listID: sectionWithEntry.listID,
+            listName: sectionWithEntry.listName,
+            entryID: sectionWithEntry.entryID,
+            entryName: sectionWithEntry.entryName,
+            entryIsCheckMarked: sectionWithEntry.entryIsCheckMarked
+        )
+        let result: Result<ListSectionWithEntry, AppError> = await self.backendAPI.execute(item: transmitUpdateItem)
         switch result {
         case .success(_):
             self.sectionManager.updateEntries([sectionWithEntry])
@@ -608,21 +598,23 @@ class ItemListViewModel: ObservableObject {
         return nil
     }
     
-    func createNewList(listName: String) async -> Error? {
-        if let result = await backendAPI.createNewList(listName: listName) {
-            return result
+    func createNewList(listName: String) async -> AppError? {
+        let createNewList = ConcreteTransmitCreateNewList(listName: listName)
+        let result: Result<ConcreteListParameters, AppError> = await backendAPI.execute(item: createNewList)
+        switch result {
+        case .success(_):
+            updateListToUse(sectionsWithEntry: [], listName: listName)
+        case .failure(let error):
+            print("TODO: \(error)")
         }
-        updateListToUse(sectionsWithEntry: [], listName: listName)
+        
         return nil
     }
     
     func addToList(itemName: String, listName: String? = nil) async -> Error? {
         let listName = listName != nil ? listName! : activeListName
-        let result = await backendAPI.addToList(
-            sectionID: nil,
-            listName: listName,
-            entryName: itemName
-        )
+        let transmitAddItemToList = ConcreteTransmitAddItemToList(id: nil, listName: listName, entryName: itemName)
+        let result: Result<ListSectionWithEntry, AppError> = await backendAPI.execute(item: transmitAddItemToList)
         switch result {
         case .success(let new_entry):
             self.sectionManager.addEntries([new_entry])

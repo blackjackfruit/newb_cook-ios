@@ -7,30 +7,30 @@
 
 import Foundation
 
-enum StorageKey: String, CustomStringConvertible {
+public enum StorageKey: String, CustomStringConvertible {
     case endpoint = "login.endpoint"
     case token = "login.token"
     case refreshToken = "login.refreshToken"
     case username = "login.username"
     case tokenValidated = "login.tokenValidated" // When a token is received from the server it must be marked as validated else it is not validated
 
-    var description: String {
+    public var description: String {
         return self.rawValue
     }
 }
 
-protocol SecureStorage {
+public protocol SecureStorage {
     func save(key: StorageKey, value: Any)
     func retrieve(key: StorageKey) -> Any?
     func remove(key: StorageKey)
 }
 
-class KeychainStorage: SecureStorage {
-    static let shared = KeychainStorage()
+public class KeychainStorage: SecureStorage {
+    public static let shared = KeychainStorage()
 }
 
 #if DEBUG
-extension KeychainStorage {
+public extension KeychainStorage {
     var userdefaults: UserDefaults {
         get {
             return UserDefaults.standard

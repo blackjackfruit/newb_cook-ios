@@ -27,7 +27,10 @@
 		1BA2DEBF29BFD628000988CB /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2DEBE29BFD628000988CB /* RowView.swift */; };
 		1BB1AC8A29C3C2CC00772291 /* AddModifySectionEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1AC8929C3C2CC00772291 /* AddModifySectionEntryView.swift */; };
 		1BB4DEFD29BBC941000FD04C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB4DEFC29BBC941000FD04C /* AppDelegate.swift */; };
+		C2434F292A9020A1003258AD /* BackendRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2434F282A9020A1003258AD /* BackendRequestBuilder.swift */; };
+		C2434F2B2A902997003258AD /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2434F2A2A902997003258AD /* NetworkConnection.swift */; };
 		C257808E29F8632500FAAA61 /* BackendAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257808D29F8632500FAAA61 /* BackendAPIModel.swift */; };
+		C26836EE2A92B317004CF1FE /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26836ED2A92B317004CF1FE /* DataParser.swift */; };
 		C2E9161129DDCADD009BC79C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E9161029DDCADD009BC79C /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +75,10 @@
 		1BA2DEBE29BFD628000988CB /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 		1BB1AC8929C3C2CC00772291 /* AddModifySectionEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddModifySectionEntryView.swift; sourceTree = "<group>"; };
 		1BB4DEFC29BBC941000FD04C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C2434F282A9020A1003258AD /* BackendRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendRequestBuilder.swift; sourceTree = "<group>"; };
+		C2434F2A2A902997003258AD /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
 		C257808D29F8632500FAAA61 /* BackendAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendAPIModel.swift; sourceTree = "<group>"; };
+		C26836ED2A92B317004CF1FE /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		C2E9161029DDCADD009BC79C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,6 +213,8 @@
 		1BA07D9629C23CAD00A4E3A4 /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				C2434F272A902063003258AD /* Parser */,
+				C2434F262A90204B003258AD /* Network */,
 				1BA07D9729C23CBC00A4E3A4 /* BackendAPI.swift */,
 				C257808D29F8632500FAAA61 /* BackendAPIModel.swift */,
 			);
@@ -219,6 +227,23 @@
 				1BB1AC8929C3C2CC00772291 /* AddModifySectionEntryView.swift */,
 			);
 			path = ModifySectionEntry;
+			sourceTree = "<group>";
+		};
+		C2434F262A90204B003258AD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C2434F282A9020A1003258AD /* BackendRequestBuilder.swift */,
+				C2434F2A2A902997003258AD /* NetworkConnection.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		C2434F272A902063003258AD /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				C26836ED2A92B317004CF1FE /* DataParser.swift */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 		C26929CC29E8785500917B8A /* Preview Content */ = {
@@ -362,6 +387,7 @@
 				1B61259029B7E84B0064F815 /* SettingsView.swift in Sources */,
 				C257808E29F8632500FAAA61 /* BackendAPIModel.swift in Sources */,
 				1B67AF7729B9188600EE95A9 /* ListSectionModel.swift in Sources */,
+				C26836EE2A92B317004CF1FE /* DataParser.swift in Sources */,
 				1B4F486529CE5B7F0017FAC5 /* UserListNamesView.swift in Sources */,
 				1B61256829B7A8250064F815 /* MainTabView.swift in Sources */,
 				C2E9161129DDCADD009BC79C /* SearchView.swift in Sources */,
@@ -369,9 +395,11 @@
 				1BA07D9829C23CBC00A4E3A4 /* BackendAPI.swift in Sources */,
 				1B67AF7529B9170700EE95A9 /* ItemListViewModel.swift in Sources */,
 				1B61259229B7F2760064F815 /* LoginView.swift in Sources */,
+				C2434F2B2A902997003258AD /* NetworkConnection.swift in Sources */,
 				1B67AF7029B9167100EE95A9 /* UserAuthentication.swift in Sources */,
 				1BA07D9029C2273900A4E3A4 /* LoginViewModel.swift in Sources */,
 				1B61256629B7A8250064F815 /* LocalNotesApp.swift in Sources */,
+				C2434F292A9020A1003258AD /* BackendRequestBuilder.swift in Sources */,
 				1BA07D9529C22B7100A4E3A4 /* SettingsViewModel.swift in Sources */,
 				1B5D2D5029C250F0008A2236 /* ItemListView.swift in Sources */,
 				1BB1AC8A29C3C2CC00772291 /* AddModifySectionEntryView.swift in Sources */,

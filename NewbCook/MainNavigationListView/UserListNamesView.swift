@@ -11,7 +11,6 @@ struct UserListNamesView: View {
     
     let itemListViewModel: ItemListViewModel
     @Binding var popoverListNames: Bool
-    @Binding var activeListName: String
     @State var listNames: [String] = []
     @State var isLoadingNewList = false
     @State var newListName = ""
@@ -52,7 +51,6 @@ struct UserListNamesView: View {
                                         isError = true
                                         print(error) // TODO: add metrics
                                     } else {
-                                        activeListName = newListName
                                         isError = false
                                         popoverListNames = false
                                     }
@@ -73,7 +71,6 @@ struct UserListNamesView: View {
                                         if let error = error {
                                             print(error)
                                         } else {
-                                            activeListName = listName
                                             popoverListNames = false
                                         }
                                         isLoadingNewList = false
@@ -108,7 +105,6 @@ struct UserListNamesView: View {
                 for item in listNamesWithIDs {
                     serverListNames.append(item.listName)
                 }
-                activeListName = serverListNames.first ?? ""
                 listNames = serverListNames
             case .failure(let error):
                 isError = true
@@ -143,8 +139,7 @@ struct UserListNames_Previews: PreviewProvider {
     static var previews: some View {
         UserListNamesView(
             itemListViewModel: ItemListViewModel(),
-            popoverListNames: .constant(true),
-            activeListName: .constant("")
+            popoverListNames: .constant(true)
         )
     }
 }

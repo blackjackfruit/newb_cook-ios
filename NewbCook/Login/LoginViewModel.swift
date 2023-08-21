@@ -29,7 +29,8 @@ class LoginViewModel {
         username: String,
         password: String) async -> Result<AuthenticationToken, AppError>
     {
-        let result = await self.backendAPI.fetchToken(hostname: hostname, username: username, password: password)
+        let transmitLoginCredentials = ConcreteTransmitLoginCredentials(hostName: hostname, username: username, password: password)
+        let result: Result<AuthenticationToken, AppError> = await self.backendAPI.fetchToken(using: transmitLoginCredentials)
         switch result {
         case .success(let authenticationToken):
             self.secureStorage.save(key: StorageKey.endpoint, value: hostname)
@@ -46,6 +47,6 @@ class LoginViewModel {
 
 extension LoginViewModel {
     convenience init() {
-        self.init(secureStorage: KeychainStorage.shared, backendAPI: BackendAPI())
+        self.init(secureStorage: KeychainStorage.shared, backendAPI: ConcreteBackendAPI())
     }
 }
