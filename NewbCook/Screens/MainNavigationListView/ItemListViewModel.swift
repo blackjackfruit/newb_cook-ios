@@ -292,7 +292,6 @@ class ItemListViewModel: ObservableObject {
     var listNamesWithIDs: [ResponseListNamesWithIDs] = []
     @Published var activeListName: String = ""
     
-    let secureStorage: SecureStorage
     let sectionManager = SectionManager()
     var searchText: String = ""
     
@@ -301,18 +300,10 @@ class ItemListViewModel: ObservableObject {
     
     static var loadingMoreToList = ListSection(specialSection: .loadingMoreToList, listID: 0, listName: "", sectionID: 5, sectionName: "LoadingMoreToList", sectionEntries: [])
     static var listEnd = ListSection(specialSection: .listEnd, listID: 0, listName: "", sectionID: 0, sectionName: "NeedToLoadMore", sectionEntries: [])
-    
-    public var isCheckingDatabase: Bool {
-        if self.retrieveTokenFromStorage() == nil {
-            return true
-        }
-        return false
-    }
     var loadingViewFirstTime = false
     let backendAPI: BackendAPI
     
-    init(secureStorage: SecureStorage, backendAPI: BackendAPI = ConcreteBackendAPI()) {
-        self.secureStorage = secureStorage
+    init(backendAPI: BackendAPI = ConcreteBackendAPI()) {
         self.backendAPI = backendAPI
         
         self.passthrough.sink { appError in
@@ -566,14 +557,6 @@ extension ItemListViewModel {
         }
     }
     
-    func isAuthenticated() -> Bool {
-        return self.retrieveTokenFromStorage() != nil
-    }
-    
-    func retrieveTokenFromStorage() -> String? {
-        return self.secureStorage.retrieve(key: .token) as? String
-    }
-    
     func updateEntry(sectionWithEntry: ListSectionWithEntry) async -> Error? {
         let transmitUpdateItem = ConcreteTransmitUpdateItem(
             listID: sectionWithEntry.listID,
@@ -651,12 +634,6 @@ extension ItemListViewModel {
             sectionIndex += 1
         }
         self.listNonSearchSections = sections
-    }
-}
-
-extension ItemListViewModel {
-    convenience init() {
-        self.init(secureStorage: KeychainStorage.shared)
     }
 }
 

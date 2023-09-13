@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+fileprivate let color1 = Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0))
+
 struct LoginView: View {
     @Binding var isNotAuthenticated: Bool
     
@@ -18,7 +20,7 @@ struct LoginView: View {
     
     var loginViewModel: LoginViewModel {
         get {
-            return LoginViewModel(secureStorage: self.secureStorage, backendAPI: self.backendAPI)
+            return LoginViewModel(storage: self.storage, backendAPI: self.backendAPI)
         }
     }
     
@@ -108,7 +110,7 @@ struct LoginView: View {
                 .frame(maxWidth: .infinity)
             self.loginVerification {
                 loginText
-                    .background(Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0)))
+                    .background(color1)
             } readyToValidateCredentials: {
                 loginText
                     .background(.red)
@@ -116,7 +118,7 @@ struct LoginView: View {
                 ProgressView().padding()
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.black)
-                .background(Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0)))
+                .background(color1)
             }
         }
         .cornerRadius(10.0)
@@ -150,7 +152,7 @@ struct LoginView: View {
 }
 
 extension LoginView {
-    var secureStorage: SecureStorage {
+    var storage: Storage {
         get {
             return KeychainStorage.shared
         }

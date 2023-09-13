@@ -1,47 +1,57 @@
 //
-//  Parser.swift
+//  ConcreteBackendRequestBuilder.swift
 //  NewbCook
 //
-//  Created by iury on 8/18/23.
+//  Created by iury on 9/13/23.
 //
 
 import Foundation
 
-public protocol BackendRequestBuilder {
-    var refreshToken: Bool { get }
-    func build() throws -> URLRequest
-}
-
 class ConcreteBackendRequestBuilder: BackendRequestBuilder {
+    var hostname: String
     var refreshToken: Bool = true
-    let secureStorage: SecureStorage
+    let storage: Storage
     var transmitEndpoint: (TransmitEndpoint & Codable)?
     var transmitLoginCredentials: TransmitLoginCredentials?
+    var timeout: TimeInterval = 5
     
     init(
-        secureStorage: SecureStorage = KeychainStorage.shared,
+        storage: Storage = KeychainStorage.shared,
+        hostname: String,
         endpoint: TransmitEndpoint & Codable
     ) {
-        self.secureStorage = secureStorage
+        self.storage = storage
         self.transmitEndpoint = endpoint
+        self.hostname = hostname
     }
     
     init(
-        secureStorage: SecureStorage = KeychainStorage.shared,
+        storage: Storage = KeychainStorage.shared,
         endpoint: TransmitLoginCredentials
     ) {
-        self.secureStorage = secureStorage
+        self.storage = storage
         self.transmitLoginCredentials = endpoint
+        self.hostname = endpoint.hostname
     }
     
     func refreshToken(_ input: Bool) -> ConcreteBackendRequestBuilder {
         self.refreshToken = input
         return self
     }
+    func set(timeout: TimeInterval) -> ConcreteBackendRequestBuilder {
+        self.timeout = timeout
+        return self
+    }
 }
 
 extension ConcreteBackendRequestBuilder {
     func build() throws -> URLRequest {
+        if
+            self.transmitLoginCredentials?.hostname.count == 0 ||
+            self.transmitEndpoint?.endpoint.count == 0
+        {
+            throw AppError.custom(message: "Hostname cannot be empty")
+        }
         if let endpoint = self.transmitEndpoint {
             return try buildRequestForTransmitEndpoint(endpoint)
         } else if let endpoint = self.transmitLoginCredentials {
@@ -53,16 +63,16 @@ extension ConcreteBackendRequestBuilder {
 
 extension ConcreteBackendRequestBuilder {
     func buildRequestForTransmitLoginCredentials(_ endpoint: TransmitLoginCredentials) throws -> URLRequest {
-        guard let url = URL(string: "http://\(endpoint.hostName)/\(endpoint.endpoint)") else {
+        guard let url = URL(string: "http://\(endpoint.hostname)/\(endpoint.endpoint)") else {
             throw AppError.custom(message: "TODO")
         }
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.httpMethod
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        var appError: AppError = AppError.custom(message: "Unable to handle response")
+        let appError: AppError = AppError.custom(message: "Unable to handle response")
         do {
             request.httpBody = try JSONEncoder().encode(endpoint)
-            request.timeoutInterval = 15
+            request.timeoutInterval = self.timeout
         } catch {
             throw appError
         }
@@ -71,7 +81,7 @@ extension ConcreteBackendRequestBuilder {
     
     func buildRequestForTransmitEndpoint(_ transmitEndpoint: TransmitEndpoint & Codable) throws -> URLRequest {
         guard
-            let hostname = self.secureStorage.retrieve(key: .endpoint) as? String,
+            let hostname = self.storage.retrieve(key: .hostname) as? String,
             var url = URL(string: "http://\(hostname)/\(transmitEndpoint.endpoint)")
         else {
             throw AppError.custom(message: "TODO") //TODO:
@@ -84,12 +94,12 @@ extension ConcreteBackendRequestBuilder {
         if
             type(of: transmitEndpoint) != TransmitLoginCredentials.self
         {
-            guard let token = self.secureStorage.retrieve(key: .token) as? String else {
+            guard let token = self.storage.retrieve(key: .token) as? String else {
                 throw AppError.custom(message: "TODO")
             }
             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        request.timeoutInterval = 5
+        request.timeoutInterval = self.timeout
         
         do {
             if transmitEndpoint.httpMethod == "POST" {

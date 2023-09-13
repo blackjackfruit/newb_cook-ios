@@ -42,7 +42,7 @@ protocol TransmitFetchList: Codable, TransmitEndpoint {
 }
 
 public protocol TransmitLoginCredentials: Codable, TransmitEndpoint {
-    var hostName: String { get }
+    var hostname: String { get }
     var username: String { get }
     var password: String { get }
 }
@@ -96,7 +96,7 @@ struct ConcreteTransmitUpdateItem: TransmitUpdateItem {
 }
 
 struct ConcreteTransmitLoginCredentials: TransmitLoginCredentials {
-    let hostName: String
+    let hostname: String
     let username: String
     let password: String
     let appendVariablesToRequest: Bool = false

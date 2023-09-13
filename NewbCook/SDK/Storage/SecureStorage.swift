@@ -8,7 +8,7 @@
 import Foundation
 
 public enum StorageKey: String, CustomStringConvertible {
-    case endpoint = "login.endpoint"
+    case hostname = "login.hostname"
     case token = "login.token"
     case refreshToken = "login.refreshToken"
     case username = "login.username"
@@ -19,13 +19,13 @@ public enum StorageKey: String, CustomStringConvertible {
     }
 }
 
-public protocol SecureStorage {
+public protocol Storage {
     func save(key: StorageKey, value: Any)
     func retrieve(key: StorageKey) -> Any?
     func remove(key: StorageKey)
 }
 
-public class KeychainStorage: SecureStorage {
+public class KeychainStorage: Storage {
     public static let shared = KeychainStorage()
 }
 

@@ -23,24 +23,24 @@ struct SettingsView: View {
     private var username: String = "empty"
     private var ipAddress: String = "empty"
     private var connectivityStatus: ConnectivityStatus = .none
-    private var secureStorage: SecureStorage
+    private var storage: Storage
     
     @State var confirmationAlert = false
     let settingsViewModel = SettingsViewModel()
     
     init(
         isNotAuthenticated: Binding<Bool>,
-        secureStorage: SecureStorage = KeychainStorage()
+        storage: Storage = KeychainStorage()
     ) {
         self._isNotAuthenticated = isNotAuthenticated
-        self.secureStorage = secureStorage
+        self.storage = storage
     }
     
     var body: some View {
         VStack {
             HStack {
                 Text("Logged in as:")
-                Text(secureStorage.retrieve(key: .username) as? String ?? "Empty")
+                Text(storage.retrieve(key: .username) as? String ?? "Empty")
             }
             VStack {
                 List {

@@ -1,15 +1,11 @@
 //
-//  DataParser.swift
+//  ConcreteDataParser.swift
 //  NewbCook
 //
-//  Created by iury on 8/20/23.
+//  Created by iury on 9/13/23.
 //
 
 import Foundation
-
-public protocol DataParser {
-    func decode<S: Codable>(data: Data) throws -> S
-}
 
 public class ConcreteDataParser: DataParser {
     

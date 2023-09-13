@@ -14,7 +14,7 @@ struct SettingsViewModel {
     
     func backendEndpoint() -> String? {
         guard
-            let urlString = secureStorage.retrieve(key: StorageKey.endpoint) as? String
+            let urlString = storage.retrieve(key: StorageKey.hostname) as? String
         else {
             return nil
         }
@@ -28,7 +28,7 @@ struct SettingsViewModel {
 }
 
 extension SettingsViewModel {
-    var secureStorage: SecureStorage {
+    var storage: Storage {
         get {
             return KeychainStorage.shared
         }
