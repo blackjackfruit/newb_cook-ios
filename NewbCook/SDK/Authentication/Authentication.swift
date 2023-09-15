@@ -8,6 +8,6 @@
 import Foundation
 
 protocol Authentication {
-    func validateLoginCredentials(using transmitLoginCredentials: TransmitLoginCredentials) async -> Result<AuthenticationToken, AppError>
+    func validateLoginCredentials(using transmitLoginCredentials: TransmitLoginCredentials, completion: @escaping (AppError?)-> Void)
     func invalidateUserCredentials()
 }

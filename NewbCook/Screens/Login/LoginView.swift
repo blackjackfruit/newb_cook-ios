@@ -90,12 +90,8 @@ struct LoginView: View {
     func renderLoginButton() -> some View {
         let loginButton = Button {
             Task {
-                let result = await loginViewModel.validateUser()
-                switch result {
-                case .success(_):
-                    print("Login successful")
-                case .failure(let error):
-                    self.appError = error
+                loginViewModel.validateUser { appError in
+                    self.appError = appError
                 }
             }
         } label: {

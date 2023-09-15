@@ -14,7 +14,6 @@ enum AuthenticationState {
     case notAuthenticated
 }
 
-@MainActor
 class ConcreteAuthentication: ObservableObject, Authentication {
     @Published var authenticationState: AuthenticationState = .checking
     
@@ -36,30 +35,34 @@ class ConcreteAuthentication: ObservableObject, Authentication {
         }.store(in: &cancellables)
     }
     
-    func validateLoginCredentials(using transmitLoginCredentials: TransmitLoginCredentials) async -> Result<AuthenticationToken, AppError> {
-        var appError: AppError = AppError.custom(message: "Unable to handle response")
-        do {
-            let request = try ConcreteBackendRequestBuilder(endpoint: transmitLoginCredentials).build()
-            let (data, response) = try await URLSession.shared.data(for: request) // TODO: Must remove this line for NetworkManager
-            if let appError = process(response: response, data: data) {
-                throw appError
+    func validateLoginCredentials(using transmitLoginCredentials: TransmitLoginCredentials, completion: @escaping (AppError?)-> Void) {
+        Task {
+            var appError: AppError = AppError.custom(message: "Unable to handle response")
+            do {
+                let request = try ConcreteBackendRequestBuilder(endpoint: transmitLoginCredentials).build()
+                let (data, response) = try await URLSession.shared.data(for: request) // TODO: Must remove this line for NetworkManager
+                if let appError = process(response: response, data: data) {
+                    throw appError
+                }
+                let authenticationToken: AuthenticationToken = try dataParser.decode(data: data)
+                DispatchQueue.main.async {
+                    self.storage.save(key: StorageKey.hostname, value: transmitLoginCredentials.hostname)
+                    self.storage.save(key: StorageKey.username, value: transmitLoginCredentials.username)
+                    self.storage.save(key: StorageKey.token, value: authenticationToken.token)
+                    self.storage.save(key: StorageKey.refreshToken, value: authenticationToken.refreshToken)
+                    self.storage.save(key: StorageKey.tokenValidated, value: true)
+                    self.authenticationState = .isAuthenticated
+                }
+                completion(nil)
             }
-            let authenticationToken: AuthenticationToken = try dataParser.decode(data: data)
-            self.storage.save(key: StorageKey.hostname, value: transmitLoginCredentials.hostname)
-            self.storage.save(key: StorageKey.username, value: transmitLoginCredentials.username)
-            self.storage.save(key: StorageKey.token, value: authenticationToken.token)
-            self.storage.save(key: StorageKey.refreshToken, value: authenticationToken.refreshToken)
-            self.storage.save(key: StorageKey.tokenValidated, value: true)
-            self.authenticationState = .isAuthenticated
-            return .success(authenticationToken)
+            catch let error as AppError {
+                appError = error
+            }
+            catch {
+                appError = AppError.custom(message: "Unhandled response")
+            }
+            completion(appError)
         }
-        catch let error as AppError {
-            appError = error
-        }
-        catch {
-            appError = AppError.custom(message: "Unhandled response")
-        }
-        return .failure(appError)
     }
     
     func listenToAuthenticationChange() {
@@ -91,6 +94,7 @@ class ConcreteAuthentication: ObservableObject, Authentication {
 //        }.store(in: &cancellables)
     }
     
+    @MainActor
     func invalidateUserCredentials() {
         self.storage.remove(key: StorageKey.tokenValidated)
         self.storage.remove(key: StorageKey.token)

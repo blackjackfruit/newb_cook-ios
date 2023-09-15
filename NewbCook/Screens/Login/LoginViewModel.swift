@@ -29,20 +29,15 @@ class LoginViewModel: ObservableObject {
         self.listenToChangesToVars()
     }
     
-    func validateUser() async -> Result<AuthenticationToken, AppError>
+    func validateUser(completion: @escaping (AppError?) -> Void)
     {
         self.isAuthenticatingUser = true
         let transmitLoginCredentials = ConcreteTransmitLoginCredentials(hostname: hostname, username: username, password: password)
-        let result: Result<AuthenticationToken, AppError> = await self.authentication.validateLoginCredentials(using: transmitLoginCredentials)
-//        sleep(5)
-        self.isAuthenticatingUser = false
-//        return .failure(AppError.custom(message: "Dummy"))
-        
-        switch result {
-        case .success(let authenticationToken):
-            return .success(authenticationToken)
-        case .failure(let error):
-            return .failure(error)
+        self.authentication.validateLoginCredentials(using: transmitLoginCredentials) { appError in
+            DispatchQueue.main.async {
+                self.isAuthenticatingUser = false
+                completion(appError)
+            }
         }
     }
 }
