@@ -301,9 +301,9 @@ class ItemListViewModel: ObservableObject {
     static var loadingMoreToList = ListSection(specialSection: .loadingMoreToList, listID: 0, listName: "", sectionID: 5, sectionName: "LoadingMoreToList", sectionEntries: [])
     static var listEnd = ListSection(specialSection: .listEnd, listID: 0, listName: "", sectionID: 0, sectionName: "NeedToLoadMore", sectionEntries: [])
     var loadingViewFirstTime = false
-    let backendAPI: BackendAPI
+    let backendAPI: EndpointCommunication
     
-    init(backendAPI: BackendAPI = ConcreteBackendAPI()) {
+    init(backendAPI: EndpointCommunication = ConcreteEndpointCommunication()) {
         self.backendAPI = backendAPI
         
         self.passthrough.sink { appError in

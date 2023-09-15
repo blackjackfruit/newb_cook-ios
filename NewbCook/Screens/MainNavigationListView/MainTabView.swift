@@ -6,30 +6,27 @@
 //
 
 import SwiftUI
-
-class Authentication: ObservableObject, BackendAPIDelegate {
-    @Published var isAuthenticated = false
-    func userNotLoggedIn() {
-        isAuthenticated = false
-    }
-}
+import Combine
 
 struct MainTabView: View {
-    @ObservedObject var authentication = Authentication()
+    @State var presentingLoginView = true
+    @StateObject var authentication: ConcreteAuthentication = ConcreteAuthentication.shared
     @StateObject var itemListViewModel: ItemListViewModel = ItemListViewModel()
-    @EnvironmentObject var userAuthentication: UserAuthentication
     @State var isAuth = true
-    @Binding var isNotAuthenticated: Bool
     
+    @ViewBuilder
     var body: some View {
-        if isNotAuthenticated {
-            ProgressView().popover(isPresented: $isNotAuthenticated) {
-                LoginView(isNotAuthenticated: $isNotAuthenticated).interactiveDismissDisabled()
+        if authentication.authenticationState == .notAuthenticated {
+            ProgressView()
+                .popover(isPresented: $presentingLoginView) {
+                LoginView().interactiveDismissDisabled()
             }
-        } else {
+        }
+        else if authentication.authenticationState == .checking {
+            ProgressView()
+        }
+        else {
             mainScreenView
-                .task {
-                }
         }
     }
     
@@ -48,7 +45,6 @@ struct MainTabView: View {
     
     var listTabItem: some View {
         ItemListView(
-            isNotAuthenticated: $isNotAuthenticated,
             viewModel: itemListViewModel
         )
         .tabItem {
@@ -57,7 +53,7 @@ struct MainTabView: View {
     }
     
     var settingsTabItem: some View {
-        SettingsView(isNotAuthenticated: $isNotAuthenticated)
+        SettingsView()
         .tabItem {
             Label("Settings", systemImage: "gear")
         }
@@ -68,7 +64,7 @@ struct MainTabView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            MainTabView(isNotAuthenticated: .constant(false))
+            MainTabView()
         }
     }
 }

@@ -7,16 +7,13 @@
 
 import Foundation
 
-class UserAuthentication: ObservableObject {
+class ConcreteUserSettings {
     
-    static let shared = UserAuthentication()
+    static let shared = ConcreteUserSettings()
     let storage: Storage
-    
-    @Published var validationNeeded: Bool
     
     init(storage: Storage = KeychainStorage.shared) {
         self.storage = storage
-        self.validationNeeded = ((storage.retrieve(key: .token) as? String) != nil) ? false: true
     }
     
     func retrieveUserToken() -> String? {
@@ -25,11 +22,13 @@ class UserAuthentication: ObservableObject {
     
     func saveUserToken(token: String) {
         self.storage.save(key: .token, value: token)
-        self.validationNeeded = false
+    }
+    
+    func currentlyConnectedToHost() -> String? {
+        return storage.retrieve(key: StorageKey.hostname) as? String
     }
     
     func removeUserToken() {
         storage.remove(key: .token)
-        validationNeeded = false
     }
 }

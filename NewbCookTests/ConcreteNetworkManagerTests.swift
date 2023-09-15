@@ -21,7 +21,10 @@ final class ConcreteNetworkManagerTests: XCTestCase {
         do {
             let requestBuilder = ConcreteBackendRequestBuilder(hostname: "", endpoint: ConcreteTransmitFetchList(listName: "empty"))
             let networkManager = ConcreteNetworkManager()
-            _ = try await networkManager.execute(for: requestBuilder, credentials: Credentials(token: "", refreshToken: "", tokenValid: true))
+            _ = try await networkManager.execute(
+                for: requestBuilder,
+                credentials: Credentials(token: "", refreshToken: "", tokenValid: true)
+            )
         } catch let error as NetworkManagerErrors {
             switch error {
             case .badURL:
@@ -30,7 +33,7 @@ final class ConcreteNetworkManagerTests: XCTestCase {
                 XCTFail("Should not have been reached")
             }
         } catch {
-            XCTFail("Should not have been reached")
+            XCTFail("Should not have been reached: \(error)")
         }
     }
 }

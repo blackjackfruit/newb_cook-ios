@@ -21,7 +21,6 @@ enum FocusField {
 struct ItemListView: View {
     @State var loadingData = true
     
-    @Binding var isNotAuthenticated: Bool
     @StateObject var viewModel: ItemListViewModel
     @State private var searchText: String = ""
     @State var popoverListNames = false
@@ -31,13 +30,8 @@ struct ItemListView: View {
         if popoverListNames {
             presentListNames()
         }
-        else if isNotAuthenticated == false {
+        else {
             presentAppropriateView()
-        } else {
-            VStack {
-                ProgressView()
-                Text("Not Authenticated")
-            }
         }
     }
 
@@ -261,7 +255,6 @@ struct ItemListView: View {
 struct ItemListView_Previews: PreviewProvider {
     static var previews: some View {
         ItemListView(
-            isNotAuthenticated: .constant(true),
             viewModel: ItemListViewModel()
         )
     }

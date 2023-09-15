@@ -18,7 +18,6 @@ enum ConnectivityStatus: CustomStringConvertible {
 }
 
 struct SettingsView: View {
-    @Binding var isNotAuthenticated: Bool
     
     private var username: String = "empty"
     private var ipAddress: String = "empty"
@@ -27,13 +26,14 @@ struct SettingsView: View {
     
     @State var confirmationAlert = false
     let settingsViewModel = SettingsViewModel()
+    let authentication: Authentication
     
     init(
-        isNotAuthenticated: Binding<Bool>,
+        authentication: Authentication = ConcreteAuthentication.shared,
         storage: Storage = KeychainStorage()
     ) {
-        self._isNotAuthenticated = isNotAuthenticated
         self.storage = storage
+        self.authentication = authentication
     }
     
     var body: some View {
@@ -47,7 +47,7 @@ struct SettingsView: View {
                     Section("Network") {
                         HStack {
                             Text("IP Address:")
-                            Text("\(settingsViewModel.backendEndpoint() ?? "Error")")
+                            Text("\(settingsViewModel.backendEndpoint() ?? "Not Defined")")
                         }
                     }
                 }
@@ -63,9 +63,7 @@ struct SettingsView: View {
                 }
                 .alert("Are you sure?", isPresented: $confirmationAlert, actions: {
                     Button(role: .destructive) {
-                        settingsViewModel.logout {
-                            self.isNotAuthenticated = true
-                        }
+                        authentication.invalidateUserCredentials()
                     } label: {
                         Text("Log Out")
                     }
@@ -84,6 +82,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(isNotAuthenticated: .constant(false))
+        SettingsView()
     }
 }

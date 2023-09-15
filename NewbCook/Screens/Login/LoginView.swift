@@ -6,27 +6,16 @@
 //
 
 import SwiftUI
+import Combine
 
-fileprivate let color1 = Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0))
+fileprivate let loginLoadingColor = Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0))
+fileprivate let lightGrayColor = Color(UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0))
 
 struct LoginView: View {
-    @Binding var isNotAuthenticated: Bool
-    
-    @State private var ipAddress: String = ""
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var isAuthenticating: Bool = false
     @State private var appError: AppError? = nil
+    @StateObject var loginViewModel: LoginViewModel = LoginViewModel()
     
-    var loginViewModel: LoginViewModel {
-        get {
-            return LoginViewModel(storage: self.storage, backendAPI: self.backendAPI)
-        }
-    }
-    
-    init(isNotAuthenticated: Binding<Bool>) {
-        self._isNotAuthenticated = isNotAuthenticated
-        self._ipAddress = State(initialValue: loginViewModel.getLastValidEndpoint() ?? "")
+    init() {
     }
     
     var body: some View {
@@ -48,39 +37,51 @@ struct LoginView: View {
     @ViewBuilder
     func renderTextFields() -> some View {
         HStack {
-            Text("Endpoint:")
-            let ipAddress = TextField("IP Address", text: $ipAddress)
+            Text("Host:")
+            let ipAddress = TextField("URL or IP Address", text: $loginViewModel.hostname)
                 .keyboardType(.URL)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(true)
-            if isAuthenticating {
-                ipAddress.disabled(true)
+            if loginViewModel.isAuthenticatingUser {
+                ipAddress
+                    .disabled(true)
+                    .foregroundColor(lightGrayColor)
             }
             else {
-                ipAddress.disabled(false)
+                ipAddress
+                    .disabled(false)
+                    .foregroundColor(.black)
             }
         }
         HStack {
             Text("Username")
-            let usernameTextField = TextField("Username", text: $username)
+            let usernameTextField = TextField("Username", text: $loginViewModel.username)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(true)
-            if isAuthenticating {
-                usernameTextField.disabled(true)
+            if loginViewModel.isAuthenticatingUser {
+                usernameTextField
+                    .disabled(true)
+                    .foregroundColor(lightGrayColor)
             }
             else {
-                usernameTextField.disabled(false)
+                usernameTextField
+                    .disabled(false)
+                    .foregroundColor(.black)
             }
         }
         HStack {
             Text("Password")
-            let passwordTextField = SecureField("Password", text: $password)
+            let passwordTextField = SecureField("Password", text: $loginViewModel.password)
                 .textInputAutocapitalization(.never)
-            if isAuthenticating {
-                passwordTextField.disabled(true)
+            if loginViewModel.isAuthenticatingUser {
+                passwordTextField
+                    .disabled(true)
+                    .foregroundColor(lightGrayColor)
             }
             else {
-                passwordTextField.disabled(false)
+                passwordTextField
+                    .disabled(false)
+                    .foregroundColor(.black)
             }
         }
     }
@@ -88,65 +89,43 @@ struct LoginView: View {
     @ViewBuilder
     func renderLoginButton() -> some View {
         let loginButton = Button {
-            self.isAuthenticating = true
             Task {
-                let result = await loginViewModel.validateUser(
-                    hostname: ipAddress,
-                    username: username,
-                    password: password
-                )
+                let result = await loginViewModel.validateUser()
                 switch result {
                 case .success(_):
-                    self.isNotAuthenticated = false
+                    print("Login successful")
                 case .failure(let error):
-                    self.isAuthenticating = false
                     self.appError = error
                 }
             }
         } label: {
-            let loginText = Text("Log In")
-                .padding()
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-            self.loginVerification {
-                loginText
-                    .background(color1)
-            } readyToValidateCredentials: {
-                loginText
-                    .background(.red)
-            } validatingCredentials: {
-                ProgressView().padding()
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.black)
-                .background(color1)
+            if loginViewModel.isAuthenticatingUser {
+                ProgressView()
+                    .padding()
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .background(loginLoadingColor)
+            } else {
+                let loginText = Text("Log In")
+                    .padding()
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                if loginViewModel.allFieldsValid {
+                    loginText
+                        .background(.red)
+                } else {
+                    loginText
+                        .background(loginLoadingColor)
+                }
             }
         }
         .cornerRadius(10.0)
         
-        self.loginVerification {
+        if loginViewModel.isAuthenticatingUser || loginViewModel.allFieldsValid == false {
             loginButton.disabled(true)
-        } readyToValidateCredentials: {
-            loginButton.disabled(false)
-        } validatingCredentials: {
-            loginButton.disabled(true)
-        }
-    }
-    
-    @ViewBuilder
-    func loginVerification(
-        notReadyToValidateCredentials: () -> some View,
-        readyToValidateCredentials: () -> some View,
-        validatingCredentials: () -> some View
-    ) -> some View {
-        if (username.count > 0 && password.count > 0) &&
-            isAuthenticating == false {
-            readyToValidateCredentials()
-        }
-        else if username.count == 0 || password.count == 0 {
-            notReadyToValidateCredentials()
         }
         else {
-            validatingCredentials()
+            loginButton.disabled(false)
         }
     }
 }
@@ -157,15 +136,15 @@ extension LoginView {
             return KeychainStorage.shared
         }
     }
-    var backendAPI: BackendAPI {
+    var endpointCommunication: EndpointCommunication {
         get {
-            return ConcreteBackendAPI.shared
+            return ConcreteEndpointCommunication.shared
         }
     }
 }
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(isNotAuthenticated: .constant(true))
+        LoginView()
     }
 }

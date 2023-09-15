@@ -8,13 +8,17 @@
 import Foundation
 
 
-struct SettingsViewModel {
+class SettingsViewModel {
     
-    var userAuthentication: UserAuthentication = UserAuthentication()
+    var concreteUserSettings: ConcreteUserSettings
+    
+    init(userAuthentication: ConcreteUserSettings = ConcreteUserSettings.shared) {
+        self.concreteUserSettings = userAuthentication
+    }
     
     func backendEndpoint() -> String? {
         guard
-            let urlString = storage.retrieve(key: StorageKey.hostname) as? String
+            let urlString = concreteUserSettings.currentlyConnectedToHost()
         else {
             return nil
         }
@@ -22,7 +26,7 @@ struct SettingsViewModel {
     }
 
     func logout(completion: @escaping () -> Void) {
-        userAuthentication.removeUserToken()
+        concreteUserSettings.removeUserToken()
         completion()
     }
 }

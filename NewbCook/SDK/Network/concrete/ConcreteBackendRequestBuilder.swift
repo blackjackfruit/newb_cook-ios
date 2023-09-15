@@ -48,9 +48,10 @@ extension ConcreteBackendRequestBuilder {
     func build() throws -> URLRequest {
         if
             self.transmitLoginCredentials?.hostname.count == 0 ||
-            self.transmitEndpoint?.endpoint.count == 0
+            self.transmitEndpoint?.endpoint.count == 0 ||
+            self.hostname.count == 0
         {
-            throw AppError.custom(message: "Hostname cannot be empty")
+            throw NetworkManagerErrors.badURL
         }
         if let endpoint = self.transmitEndpoint {
             return try buildRequestForTransmitEndpoint(endpoint)
