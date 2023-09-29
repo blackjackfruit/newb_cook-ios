@@ -31,6 +31,7 @@
 		C2434F2B2A902997003258AD /* ConcreteNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2434F2A2A902997003258AD /* ConcreteNetworkManager.swift */; };
 		C257808E29F8632500FAAA61 /* BackendAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257808D29F8632500FAAA61 /* BackendAPIModel.swift */; };
 		C26836EE2A92B317004CF1FE /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26836ED2A92B317004CF1FE /* DataParser.swift */; };
+		C2AE57C62AC656730026764A /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AE57C52AC656730026764A /* AppError.swift */; };
 		C2DCCC1D2AB4C021001D9CAA /* ConcreteAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCCC1C2AB4C021001D9CAA /* ConcreteAuthentication.swift */; };
 		C2DCCC1F2AB4CCE9001D9CAA /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCCC1E2AB4CCE9001D9CAA /* Authentication.swift */; };
 		C2DEB1D62AB1EC9800F894ED /* CoreNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEB1D52AB1EC9800F894ED /* CoreNetwork.swift */; };
@@ -88,6 +89,7 @@
 		C2434F2A2A902997003258AD /* ConcreteNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteNetworkManager.swift; sourceTree = "<group>"; };
 		C257808D29F8632500FAAA61 /* BackendAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendAPIModel.swift; sourceTree = "<group>"; };
 		C26836ED2A92B317004CF1FE /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
+		C2AE57C52AC656730026764A /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		C2DCCC1C2AB4C021001D9CAA /* ConcreteAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteAuthentication.swift; sourceTree = "<group>"; };
 		C2DCCC1E2AB4CCE9001D9CAA /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		C2DEB1D52AB1EC9800F894ED /* CoreNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreNetwork.swift; sourceTree = "<group>"; };
@@ -148,13 +150,14 @@
 		1B61256429B7A8250064F815 /* NewbCook */ = {
 			isa = PBXGroup;
 			children = (
-				C2DEB1E52AB2162500F894ED /* Preview Content */,
+				C2AE57C52AC656730026764A /* AppError.swift */,
+				1B67AF7629B9188600EE95A9 /* ListSectionModel.swift */,
 				C2DEB1E42AB2130A00F894ED /* Screens */,
-				1B61256729B7A8250064F815 /* MainTabView.swift */,
 				C2DEB1E32AB212E400F894ED /* SDK */,
 				1B61256529B7A8250064F815 /* LocalNotesApp.swift */,
 				1BB4DEFC29BBC941000FD04C /* AppDelegate.swift */,
 				1B61256929B7A8260064F815 /* Assets.xcassets */,
+				C2DEB1E52AB2162500F894ED /* Preview Content */,
 			);
 			path = NewbCook;
 			sourceTree = "<group>";
@@ -180,8 +183,8 @@
 		1B67AF6E29B9163D00EE95A9 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				1B61258F29B7E84B0064F815 /* SettingsView.swift */,
 				1BA07D9429C22B7100A4E3A4 /* SettingsViewModel.swift */,
+				1B61258F29B7E84B0064F815 /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -189,24 +192,10 @@
 		1B67AF7129B9169F00EE95A9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				1B61259129B7F2760064F815 /* LoginView.swift */,
 				1BA07D8F29C2273900A4E3A4 /* LoginViewModel.swift */,
+				1B61259129B7F2760064F815 /* LoginView.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		1B67AF7329B916B100EE95A9 /* MainNavigationListView */ = {
-			isa = PBXGroup;
-			children = (
-				1BB1AC8829C3C2B900772291 /* ModifySectionEntry */,
-				1B67AF7629B9188600EE95A9 /* ListSectionModel.swift */,
-				1B67AF7429B9170700EE95A9 /* ItemListViewModel.swift */,
-				1BA2DEBE29BFD628000988CB /* RowView.swift */,
-				1B5D2D4F29C250F0008A2236 /* ItemListView.swift */,
-				1B4F486429CE5B7F0017FAC5 /* UserListNamesView.swift */,
-				C2E9161029DDCADD009BC79C /* SearchView.swift */,
-			);
-			path = MainNavigationListView;
 			sourceTree = "<group>";
 		};
 		1BA07D9129C2276000A4E3A4 /* Storage */ = {
@@ -227,14 +216,6 @@
 			path = BackendCommunication;
 			sourceTree = "<group>";
 		};
-		1BB1AC8829C3C2B900772291 /* ModifySectionEntry */ = {
-			isa = PBXGroup;
-			children = (
-				1BB1AC8929C3C2CC00772291 /* AddModifySectionEntryView.swift */,
-			);
-			path = ModifySectionEntry;
-			sourceTree = "<group>";
-		};
 		C2434F262A90204B003258AD /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +232,33 @@
 				C2DEB1E12AB2129600F894ED /* ConcreteDataParser.swift */,
 			);
 			path = Parser;
+			sourceTree = "<group>";
+		};
+		C2AE57C22AC6559F0026764A /* ItemListView */ = {
+			isa = PBXGroup;
+			children = (
+				1B67AF7429B9170700EE95A9 /* ItemListViewModel.swift */,
+				1B5D2D4F29C250F0008A2236 /* ItemListView.swift */,
+				1BB1AC8929C3C2CC00772291 /* AddModifySectionEntryView.swift */,
+				1BA2DEBE29BFD628000988CB /* RowView.swift */,
+			);
+			path = ItemListView;
+			sourceTree = "<group>";
+		};
+		C2AE57C32AC655C30026764A /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				C2E9161029DDCADD009BC79C /* SearchView.swift */,
+			);
+			path = SearchView;
+			sourceTree = "<group>";
+		};
+		C2AE57C42AC655D70026764A /* UserListNamesView */ = {
+			isa = PBXGroup;
+			children = (
+				1B4F486429CE5B7F0017FAC5 /* UserListNamesView.swift */,
+			);
+			path = UserListNamesView;
 			sourceTree = "<group>";
 		};
 		C2DCCC1B2AB4C012001D9CAA /* Authentication */ = {
@@ -298,7 +306,10 @@
 		C2DEB1E42AB2130A00F894ED /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				1B67AF7329B916B100EE95A9 /* MainNavigationListView */,
+				1B61256729B7A8250064F815 /* MainTabView.swift */,
+				C2AE57C42AC655D70026764A /* UserListNamesView */,
+				C2AE57C32AC655C30026764A /* SearchView */,
+				C2AE57C22AC6559F0026764A /* ItemListView */,
 				1B67AF7129B9169F00EE95A9 /* Login */,
 				1B67AF6E29B9163D00EE95A9 /* Settings */,
 			);
@@ -455,6 +466,7 @@
 			files = (
 				C2DEB1D82AB1ECBD00F894ED /* NetworkManager.swift in Sources */,
 				1BA07D9329C2277300A4E3A4 /* SecureStorage.swift in Sources */,
+				C2AE57C62AC656730026764A /* AppError.swift in Sources */,
 				1BB4DEFD29BBC941000FD04C /* AppDelegate.swift in Sources */,
 				C2DCCC1D2AB4C021001D9CAA /* ConcreteAuthentication.swift in Sources */,
 				1B61259029B7E84B0064F815 /* SettingsView.swift in Sources */,

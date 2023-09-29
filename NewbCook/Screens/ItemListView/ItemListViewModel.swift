@@ -9,29 +9,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-public enum AppError: Error {
-    case hostNotAvailable // When the server is not running
-    case invalidCredentials
-    case sessionExpired
-    case sessionInvalid
-    case custom(message: String)
-    
-    var description: String {
-        switch self {
-        case .hostNotAvailable:
-            return "Check server is running"
-        case .invalidCredentials:
-            return "Invalid credentials"
-        case .sessionExpired:
-            return "Session unable to refresh, please log in again"
-        case .sessionInvalid:
-            return "Session is no longer valid, please re-login"
-        case .custom(message: let msg):
-            return msg
-        }
-    }
-}
-
 enum ItemListViewModelStatus {
     case loadingList
     case listeningToBackend
@@ -61,7 +38,7 @@ public struct AuthenticationToken: Codable {
 /**
 A class that will keep track of the sections which will be separated by what is received from the backend, what is completed, and the special sections.
 */
-class SectionManager: ObservableObject {
+class SectionManager {
     var listName: String = "Loading..."
     var completedSection: [ListSectionWithEntry] = []
     var uncompletedSection: [ListSectionWithEntry] = []

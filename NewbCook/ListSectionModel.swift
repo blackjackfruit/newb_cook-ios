@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol BackendEndpoint {
-    var endpoint: String { get }
-}
-
 protocol ListParameters: Identifiable {
     var id: UInt { get }
     var listName: String { get }
@@ -42,10 +38,6 @@ enum SectionType: String, Codable {
         case listEnd = "list_end"
         case unspecified = "unspecified"
     }
-}
-
-enum DirectionToReadList: String, Codable {
-    case initial
 }
 
 struct ListEntry: Identifiable, Codable, Hashable {

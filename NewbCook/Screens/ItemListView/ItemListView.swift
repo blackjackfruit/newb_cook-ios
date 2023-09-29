@@ -98,7 +98,7 @@ struct ItemListView: View {
                 Task {
                     let result = await viewModel.pullInitialList()
                     switch result {
-                    case .success(let _):
+                    case .success(_):
                         loadingData = false
                     case .failure(let error):
                         print(error) // TODO: record metric
