@@ -18,9 +18,10 @@ struct MainTabView: View {
     var body: some View {
         if authentication.authenticationState == .notAuthenticated {
             ProgressView()
-                .popover(isPresented: $presentingLoginView) {
-                LoginView().interactiveDismissDisabled()
-            }
+                .fullScreenCover(isPresented: $presentingLoginView, content: {
+                    LoginView().interactiveDismissDisabled()
+                })
+                
         }
         else if authentication.authenticationState == .checking {
             ProgressView()

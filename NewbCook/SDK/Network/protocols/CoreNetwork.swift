@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol LowLevelNetworkConnection {
+public protocol CoreNetwork {
     func execute(for request: URLRequest) async throws -> (Data, URLResponse)
 }

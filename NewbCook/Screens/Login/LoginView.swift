@@ -8,8 +8,15 @@
 import SwiftUI
 import Combine
 
-fileprivate let loginLoadingColor = Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0))
-fileprivate let lightGrayColor = Color(UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0))
+fileprivate let loginLoadingColor = Color(UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 0.5))
+fileprivate let lightGrayColor = Color.white
+fileprivate let gradientColor =
+Gradient(colors:
+            [
+                Color(uiColor: UIColor(red: 0.97, green: 0.44, blue: 0.32, alpha: 1.0)),
+                Color(uiColor: UIColor(red: 0.57, green: 0.16, blue: 0.08, alpha: 1.0))
+            ]
+)
 
 struct LoginView: View {
     @State private var appError: AppError? = nil
@@ -20,14 +27,21 @@ struct LoginView: View {
     
     var body: some View {
         ZStack {
+            
+            Rectangle()
+                .fill(LinearGradient(gradient: gradientColor, startPoint: .top, endPoint: .bottom))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
             VStack {
+                Image("NewbCookLogo").resizable().scaledToFit().frame(width: 150, height: 150)
                 VStack {
                     renderTextFields()
                 }
-                .padding(.all)
+
                 renderLoginButton()
                 if let errorMsg = appError?.description {
                     Text(errorMsg)
+                        .foregroundColor(lightGrayColor)
                 }
             }
             .padding()
@@ -37,53 +51,61 @@ struct LoginView: View {
     @ViewBuilder
     func renderTextFields() -> some View {
         HStack {
-            Text("Host:")
             let ipAddress = TextField("URL or IP Address", text: $loginViewModel.hostname)
                 .keyboardType(.URL)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(true)
+                .foregroundColor(lightGrayColor)
             if loginViewModel.isAuthenticatingUser {
                 ipAddress
                     .disabled(true)
-                    .foregroundColor(lightGrayColor)
             }
             else {
                 ipAddress
                     .disabled(false)
-                    .foregroundColor(.black)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
+        .background(Color(uiColor: UIColor(red: 0.92, green: 0.45, blue: 0.36, alpha: 0.5)))
+        .cornerRadius(5.0)
+        
         HStack {
-            Text("Username")
             let usernameTextField = TextField("Username", text: $loginViewModel.username)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(true)
+                .foregroundColor(lightGrayColor)
             if loginViewModel.isAuthenticatingUser {
                 usernameTextField
                     .disabled(true)
-                    .foregroundColor(lightGrayColor)
             }
             else {
                 usernameTextField
                     .disabled(false)
-                    .foregroundColor(.black)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
+        .background(Color(uiColor: UIColor(red: 0.92, green: 0.45, blue: 0.36, alpha: 0.5)))
+        .cornerRadius(5.0)
+        
         HStack {
-            Text("Password")
             let passwordTextField = SecureField("Password", text: $loginViewModel.password)
                 .textInputAutocapitalization(.never)
+                .foregroundColor(lightGrayColor)
             if loginViewModel.isAuthenticatingUser {
                 passwordTextField
                     .disabled(true)
-                    .foregroundColor(lightGrayColor)
             }
             else {
                 passwordTextField
                     .disabled(false)
-                    .foregroundColor(.black)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
+        .background(Color(uiColor: UIColor(red: 0.92, green: 0.45, blue: 0.36, alpha: 0.5)))
+        .cornerRadius(5.0)
     }
     
     @ViewBuilder

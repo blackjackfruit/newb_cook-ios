@@ -33,10 +33,10 @@ public class ConcreteEndpointCommunication: ObservableObject, EndpointCommunicat
     // or improve the onAppear for getting to the end of a list
     static var isLoadingingOlderData = false
     
-    public init(
+    private init(
         storage: Storage = KeychainStorage.shared,
         dataParser: DataParser = ConcreteDataParser(),
-        networkManager: NetworkManager = ConcreteNetworkManager()
+        networkManager: NetworkManager = ConcreteNetworkManager.shared
     ) {
         self.storage = storage
         self.dataParser = dataParser

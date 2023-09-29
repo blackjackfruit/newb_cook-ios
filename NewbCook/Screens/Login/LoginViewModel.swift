@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+
 @MainActor
 class LoginViewModel: ObservableObject {
     @Published var hostname: String = ""

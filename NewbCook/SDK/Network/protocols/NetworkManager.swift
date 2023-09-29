@@ -9,4 +9,7 @@ import Foundation
 
 public protocol NetworkManager {
     func execute(for requestBuilder: BackendRequestBuilder, credentials: Credentials) async throws -> (Data, Credentials)
+    
+    // Only one type of BackendMessageType can be registered at any one time
+    func register(backendMessage: some BackendMessages)
 }

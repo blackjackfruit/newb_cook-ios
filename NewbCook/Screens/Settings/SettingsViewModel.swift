@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class SettingsViewModel {
     
     var concreteUserSettings: ConcreteUserSettings
@@ -16,17 +15,19 @@ class SettingsViewModel {
         self.concreteUserSettings = userAuthentication
     }
     
+    @MainActor
     func backendEndpoint() -> String? {
         guard
-            let urlString = concreteUserSettings.currentlyConnectedToHost()
+            let urlString = concreteUserSettings.connectedToEndpoint()
         else {
             return nil
         }
         return urlString
     }
 
+    @MainActor
     func logout(completion: @escaping () -> Void) {
-        concreteUserSettings.removeUserToken()
+        concreteUserSettings.clearAllValues()
         completion()
     }
 }

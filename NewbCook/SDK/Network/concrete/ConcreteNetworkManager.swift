@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Credentials {
+public struct Credentials: Equatable {
     let token: String
     let refreshToken: String
     let tokenValid: Bool
@@ -23,13 +23,20 @@ public enum NetworkManagerErrors: Error {
 
 public class ConcreteNetworkManager: NetworkManager {
     
-    let lowLevelNetworkConnection: LowLevelNetworkConnection
-    
-    public init(
-        lowLevelNetworkConnection: LowLevelNetworkConnection = ConcreteLowLevelNetwork()
+    let lowLevelNetworkConnection: CoreNetwork
+    var backendMessages: [BackendMessageType: any BackendMessages] = [:]
+    public static let shared = ConcreteNetworkManager()
+#if TEST
+    init(lowLevelNetworkConnection: CoreNetwork = ConcreteLowLevelNetwork()) {
+        self.lowLevelNetworkConnection = lowLevelNetworkConnection
+    }
+#else
+    private init(
+        lowLevelNetworkConnection: CoreNetwork = ConcreteLowLevelNetwork()
     ) {
         self.lowLevelNetworkConnection = lowLevelNetworkConnection
     }
+#endif
     
     // All network calls go through this function except for login.
     // If token has expired then refreshing of token will occur, if that fails due to user logged in on another device then
@@ -83,6 +90,11 @@ public class ConcreteNetworkManager: NetworkManager {
         default:
             throw appError
         }
+    }
+
+    public func register(backendMessage: some BackendMessages) {
+        print(backendMessage.backendMessageType)
+        backendMessages[backendMessage.backendMessageType] = backendMessage
     }
 }
 

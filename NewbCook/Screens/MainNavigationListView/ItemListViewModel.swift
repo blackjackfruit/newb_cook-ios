@@ -303,7 +303,7 @@ class ItemListViewModel: ObservableObject {
     var loadingViewFirstTime = false
     let backendAPI: EndpointCommunication
     
-    init(backendAPI: EndpointCommunication = ConcreteEndpointCommunication()) {
+    init(backendAPI: EndpointCommunication = ConcreteEndpointCommunication.shared) {
         self.backendAPI = backendAPI
         
         self.passthrough.sink { appError in

@@ -14,25 +14,26 @@ enum AuthenticationState {
     case notAuthenticated
 }
 
-class ConcreteAuthentication: ObservableObject, Authentication {
+class ConcreteAuthentication: ObservableObject, Authentication, BackendMessages {
     @Published var authenticationState: AuthenticationState = .checking
     
     static let shared = ConcreteAuthentication()
+    var backendMessageType: BackendMessageType = .Authentication
     
-    var storage: Storage
+    var userSettings: ConcreteUserSettings
     var dataParser: DataParser
     var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     
-    init(
-        storage: Storage = KeychainStorage.shared,
+    private init(
+        userSettings: ConcreteUserSettings = ConcreteUserSettings.shared,
         dataParser: DataParser = ConcreteDataParser()
     ) {
-        self.storage = storage
+        self.userSettings = userSettings
         self.dataParser = dataParser
-        self.listenToAuthenticationChange()
         $authenticationState.sink { state in
             print("State: \(state)")
         }.store(in: &cancellables)
+        self.checkAuthenticationState()
     }
     
     func validateLoginCredentials(using transmitLoginCredentials: TransmitLoginCredentials, completion: @escaping (AppError?)-> Void) {
@@ -45,12 +46,16 @@ class ConcreteAuthentication: ObservableObject, Authentication {
                     throw appError
                 }
                 let authenticationToken: AuthenticationToken = try dataParser.decode(data: data)
+                let loginUserSettings = LoginUserSettings(
+                    username: transmitLoginCredentials.username,
+                    hostname: transmitLoginCredentials.hostname,
+                    token: authenticationToken.token,
+                    refreshToken: authenticationToken.refreshToken,
+                    tokenValidated: true
+                )
+                
+                await self.userSettings.loginUser(for: loginUserSettings)
                 DispatchQueue.main.async {
-                    self.storage.save(key: StorageKey.hostname, value: transmitLoginCredentials.hostname)
-                    self.storage.save(key: StorageKey.username, value: transmitLoginCredentials.username)
-                    self.storage.save(key: StorageKey.token, value: authenticationToken.token)
-                    self.storage.save(key: StorageKey.refreshToken, value: authenticationToken.refreshToken)
-                    self.storage.save(key: StorageKey.tokenValidated, value: true)
                     self.authenticationState = .isAuthenticated
                 }
                 completion(nil)
@@ -65,41 +70,19 @@ class ConcreteAuthentication: ObservableObject, Authentication {
         }
     }
     
-    func listenToAuthenticationChange() {
-        
-        if let tokenValid = self.storage.retrieve(key: StorageKey.tokenValidated) as? Bool {
-            self.authenticationState = tokenValid ? .isAuthenticated : .notAuthenticated
-            return
+    func checkAuthenticationState() {
+        Task {
+            // TODO: Make network request to backend to know if token isn't expired
+            let tokenValid = await self.userSettings.tokenValidated()
+            DispatchQueue.main.async {
+                self.authenticationState = tokenValid ? .isAuthenticated : .notAuthenticated
+            }
         }
-        self.authenticationState = .notAuthenticated
-                        
-        // TODO: Need to not use a timer and start listening to the server push event for authentication state change
-//        var invalid = 5
-//        Timer.publish(every: 1, on: .current, in: .default).autoconnect().sink { [weak self] _ in
-//            guard let self = self else {
-//                return
-//            }
-//            if invalid == 0 {
-////                print("Is Not authenticated")
-////                self.authenticationState = .notAuthenticated
-//            } else {
-//                if let tokenValid = self.storage.retrieve(key: StorageKey.tokenValidated) as? Bool {
-//                    self.authenticationState = tokenValid ? .isAuthenticated : .notAuthenticated
-//                    return
-//                }
-//                self.authenticationState = .notAuthenticated
-//                invalid -= 1
-//            }
-//
-//        }.store(in: &cancellables)
     }
     
     @MainActor
     func invalidateUserCredentials() {
-        self.storage.remove(key: StorageKey.tokenValidated)
-        self.storage.remove(key: StorageKey.token)
-        self.storage.remove(key: StorageKey.refreshToken)
-        self.storage.remove(key: StorageKey.username)
+        self.userSettings.clearAllValues()
         self.authenticationState = .notAuthenticated
     }
     
@@ -135,5 +118,18 @@ class ConcreteAuthentication: ObservableObject, Authentication {
         default:
             return AppError.custom(message: "Unknown response from server")
         }
+    }
+}
+
+// BackendMessages
+extension ConcreteAuthentication {
+    typealias MessageType = AuthenticationState
+    
+    func received(object: AuthenticationState) {
+        self.authenticationState = object
+    }
+    
+    func connectionDidClose() {
+        self.authenticationState = .notAuthenticated
     }
 }
