@@ -27,7 +27,7 @@ public class ConcreteNetworkManager: NetworkManager {
     var backendMessages: [BackendMessageType: any BackendMessages] = [:]
     public static let shared = ConcreteNetworkManager()
 #if TEST
-    init(lowLevelNetworkConnection: CoreNetwork = ConcreteLowLevelNetwork()) {
+    public init(lowLevelNetworkConnection: CoreNetwork = ConcreteLowLevelNetwork()) {
         self.lowLevelNetworkConnection = lowLevelNetworkConnection
     }
 #else
@@ -41,54 +41,56 @@ public class ConcreteNetworkManager: NetworkManager {
     // All network calls go through this function except for login.
     // If token has expired then refreshing of token will occur, if that fails due to user logged in on another device then
     // this function will return the appropriate error so to have user log back in.
-    public func execute(for requestBuilder: BackendRequestBuilder, credentials: Credentials) async throws -> (Data, Credentials) {
-        let request = try requestBuilder.build()
-        let hostname = requestBuilder.hostname
-        var token = credentials.token
-        let refreshToken = credentials.refreshToken
-        guard
-            hostname.count > 0,
-            let urlString = request.url,
-            let urlMethod = request.httpMethod,
-            let getNewTokenURL = URL(string: "http://\(hostname)/jwt_life_cycle_maintainer_get_new_token"),
-            let saveNewTokenURL = URL(string: "http://\(hostname)/jwt_life_cycle_maintainer_save_new_token")
-        else {
-            throw NetworkManagerErrors.badURL
-        }
-        
-        if credentials.tokenValid == false {
-            token = try await attemptTokenRefresh(newTokenURL: getNewTokenURL, refreshToken: refreshToken, saveTokenURL: saveNewTokenURL)
-        }
-        
-        let mutableURLRequest = MutableURLRequest(url: urlString)
-        mutableURLRequest.httpMethod = urlMethod
-        mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        mutableURLRequest.httpBody = request.httpBody
-        
-        let (data, response) = try await lowLevelNetworkConnection.execute(for: mutableURLRequest as URLRequest)
-        guard let appError = process(response: response, data: data) else {
-            return (data, Credentials(token: token, refreshToken: refreshToken, tokenValid: true))
-        }
-        switch appError {
-        case .sessionExpired:
-            do {
-                token = try await attemptTokenRefresh(newTokenURL: getNewTokenURL, refreshToken: refreshToken, saveTokenURL: saveNewTokenURL)
-                mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-                let (data, response) = try await lowLevelNetworkConnection.execute(for: mutableURLRequest as URLRequest)
-                if let error = process(response: response, data: data) {
-                    throw error
-                }
-                return (data, Credentials(token: token, refreshToken: refreshToken, tokenValid: true))
-            } catch let error as NetworkManagerErrors {
-                throw error
-            } catch let error {
-                throw error
+    public func execute(for requestBuilder: BackendRequestBuilder, credentials: Credentials) -> Task<(Data, Credentials), Error> {
+        return Task {
+            let request = try requestBuilder.build()
+            let hostname = requestBuilder.hostname
+            var token = credentials.token
+            let refreshToken = credentials.refreshToken
+            guard
+                hostname.count > 0,
+                let urlString = request.url,
+                let urlMethod = request.httpMethod,
+                let getNewTokenURL = URL(string: "http://\(hostname)/jwt_life_cycle_maintainer_get_new_token"),
+                let saveNewTokenURL = URL(string: "http://\(hostname)/jwt_life_cycle_maintainer_save_new_token")
+            else {
+                throw NetworkManagerErrors.badURL
             }
-        case .invalidCredentials:
-            throw appError
-        default:
-            throw appError
+
+            if credentials.tokenValid == false {
+                token = try await attemptTokenRefresh(newTokenURL: getNewTokenURL, refreshToken: refreshToken, saveTokenURL: saveNewTokenURL)
+            }
+
+            let mutableURLRequest = MutableURLRequest(url: urlString)
+            mutableURLRequest.httpMethod = urlMethod
+            mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            mutableURLRequest.httpBody = request.httpBody
+
+            let (data, response) = try await lowLevelNetworkConnection.execute(for: mutableURLRequest as URLRequest)
+            guard let appError = process(response: response, data: data) else {
+                return (data, Credentials(token: token, refreshToken: refreshToken, tokenValid: true))
+            }
+            switch appError {
+            case .sessionExpired:
+                do {
+                    token = try await attemptTokenRefresh(newTokenURL: getNewTokenURL, refreshToken: refreshToken, saveTokenURL: saveNewTokenURL)
+                    mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                    let (data, response) = try await lowLevelNetworkConnection.execute(for: mutableURLRequest as URLRequest)
+                    if let error = process(response: response, data: data) {
+                        throw error
+                    }
+                    return (data, Credentials(token: token, refreshToken: refreshToken, tokenValid: true))
+                } catch let error as NetworkManagerErrors {
+                    throw error
+                } catch let error {
+                    throw NetworkManagerErrors.unknown
+                }
+            case .invalidCredentials:
+                throw appError
+            default:
+                throw NetworkManagerErrors.unknown
+            }
         }
     }
 

@@ -63,16 +63,21 @@ public class ConcreteEndpointCommunication: ObservableObject, EndpointCommunicat
         let requestBuilder = ConcreteBackendRequestBuilder(hostname: hostname, endpoint: item)
         let credentials = Credentials(token: token, refreshToken: refreshToken, tokenValid: storedTokenValidated)
         
+        
+        let task = networkManager.execute(for: requestBuilder, credentials: credentials)
         do {
-            let (data, credentials) = try await networkManager.execute(for: requestBuilder, credentials: credentials)
+            let value = try await task.value
             self.storage.save(key: StorageKey.token, value: credentials.token)
             self.storage.save(key: StorageKey.refreshToken, value: credentials.refreshToken)
             self.storage.save(key: StorageKey.tokenValidated, value: credentials.tokenValid)
-            let returnObject: S = try dataParser.decode(data: data)
-            return .success(returnObject)
-        }
-        catch let networkManagerError as NetworkManagerErrors {
-            switch networkManagerError {
+            do {
+                let returnObject: S = try dataParser.decode(data: value.0)
+                return .success(returnObject)
+            } catch {
+                return .failure(AppError.custom(message: "TODO"))
+            }
+        } catch let error as NetworkManagerErrors {
+            switch error {
             case .invalidCredentials:
                 clearDataAndLogOut()
             case .sessionExpired:
@@ -80,12 +85,10 @@ public class ConcreteEndpointCommunication: ObservableObject, EndpointCommunicat
             default:
                 print("TODO")
             }
+        } catch {
             return .failure(AppError.custom(message: "TODO"))
         }
-        catch let error {
-            self.storage.save(key: StorageKey.token, value: credentials.token)
-            return .failure(AppError.custom(message: "TODO: \(error)"))
-        }
+        return .failure(AppError.custom(message: "TODO"))
     }
     
     func clearDataAndLogOut() {

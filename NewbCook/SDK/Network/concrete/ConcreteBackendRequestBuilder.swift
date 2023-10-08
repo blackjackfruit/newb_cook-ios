@@ -87,14 +87,15 @@ extension ConcreteBackendRequestBuilder {
         else {
             throw AppError.custom(message: "TODO") //TODO:
         }
-        if transmitEndpoint.appendVariablesToRequest, let newURL = createURLRequest(baseURL: "http://\(hostname)/\(transmitEndpoint.endpoint)", object: transmitEndpoint) {
+        
+        if transmitEndpoint.appendVariablesToRequest,
+            let newURL = createURLRequest(baseURL: "http://\(hostname)/\(transmitEndpoint.endpoint)", object: transmitEndpoint)
+        {
             url = newURL
         }
         var request = URLRequest(url: url)
         request.httpMethod = transmitEndpoint.httpMethod
-        if
-            type(of: transmitEndpoint) != TransmitLoginCredentials.self
-        {
+        if type(of: transmitEndpoint) != TransmitLoginCredentials.self {
             guard let token = self.storage.retrieve(key: .token) as? String else {
                 throw AppError.custom(message: "TODO")
             }

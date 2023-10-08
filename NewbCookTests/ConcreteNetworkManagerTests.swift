@@ -17,11 +17,14 @@ class MockLowLevelNetworkConnection: CoreNetwork {
     }
     init() {
     }
-    
+
+    @discardableResult
     func setResponse(_ value: (Data, URLResponse)) -> Self {
         dummyValue = value
         return self
     }
+
+    @discardableResult
     func setThrows(_ value: Error) -> Self {
         throwsValue = value
         return self
@@ -38,6 +41,12 @@ class MockLowLevelNetworkConnection: CoreNetwork {
 }
 
 final class ConcreteNetworkManagerTests: XCTestCase {
+    
+    let mockStorage: Storage = KeychainStorage.shared
+    let mockNetwork = MockLowLevelNetworkConnection()
+    let mockCredentials = Credentials(token: "validtoken", refreshToken: "refreshtoken", tokenValid: true)
+    let hostname = "https://localhost:3000"
+    
     override func setUpWithError() throws {
         
     }
@@ -68,22 +77,25 @@ final class ConcreteNetworkManagerTests: XCTestCase {
     
     func test_making_network_call_returns_200_with_mock_data_and_credentials() async {
         do {
-            let mockCredentials = Credentials(token: "validtoken", refreshToken: "refreshtoken", tokenValid: true)
-            let hostname = "https://localhost:3000"
-            let requestBuilder = ConcreteBackendRequestBuilder(hostname: hostname, endpoint: ConcreteTransmitFetchList(listName: "empty"))
+            mockStorage.save(key: .token, value: "01234")
+            let requestBuilder = ConcreteBackendRequestBuilder(
+                hostname: hostname,
+                endpoint: ConcreteTransmitFetchList(listName: "empty")
+            )
             let tuple: (Data, URLResponse) = (
                 try! JSONSerialization.data(withJSONObject: ["test":"passed"]),
-                HTTPURLResponse(url: URL(string: hostname)!, statusCode: 200, httpVersion: nil, headerFields: [:]) as! URLResponse
+                HTTPURLResponse(url: URL(string: hostname)!, statusCode: 200, httpVersion: nil, headerFields: [:])!
             )
-            let mockNetwork = MockLowLevelNetworkConnection()
+            
             mockNetwork.setResponse(tuple)
             let networkManager = ConcreteNetworkManager(lowLevelNetworkConnection: mockNetwork)
-            let (data, credentials) = try await networkManager.execute(
+            let task = networkManager.execute(
                 for: requestBuilder,
                 credentials: mockCredentials
             )
-            XCTAssertEqual(tuple.0, data)
-            XCTAssertEqual(mockCredentials, credentials)
+            let result = try await task.value
+            XCTAssertEqual(tuple.0, result.0)
+            XCTAssertEqual(mockCredentials, result.1)
         } catch {
             XCTFail("Should not have been reached: \(error)")
         }
